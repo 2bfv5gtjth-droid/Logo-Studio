@@ -8,12 +8,43 @@
 <meta name="apple-mobile-web-app-title" content="Logo Studio">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" content="#3a4bff">
-<meta name="description" content="Maak logo’s, CV’s, posters en meer op je telefoon.">
+<meta name="description" content="Gratis logo maker en ontwerpapp in je browser. Maak logo’s, CV’s, posters, flyers, Instagram-posts en meer met 60+ sjablonen. Geen account nodig.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:site_name" content="Logo Studio">
+<meta property="og:title" content="Logo Studio – gratis logo maker en ontwerpapp">
+<meta property="og:description" content="Maak logo’s, CV’s, posters en meer in je browser. Geen account nodig.">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Logo Studio","applicationCategory":"DesignApplication","operatingSystem":"Any","inLanguage":"nl","description":"Gratis logo maker en ontwerpapp in je browser: logo’s, CV’s, posters, flyers en social media-afbeeldingen.","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}}</script>
+<script>
+/* Zelfstandige versie: geen Claude-omgeving, dus bewaren via het deelmenu en zonder AI */
+(function(){
+  if(window.claude) return;
+  document.documentElement.setAttribute('data-noai','1');
+  const dlAPI={save:async function(o){
+    const filename=o.filename,data=o.data;
+    const type=/\.json$/i.test(filename)?'application/json':/\.pdf$/i.test(filename)?'application/pdf':/\.jpe?g$/i.test(filename)?'image/jpeg':'image/png';
+    const blob=data instanceof Blob?data:new Blob([data],{type:type});
+    const file=new File([blob],filename,{type:blob.type||type});
+    try{
+      if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:filename});return;}
+    }catch(e){
+      if(e&&e.name==='AbortError'){const er=new Error('declined');er.code='declined';throw er;}
+    }
+    const url=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
+    setTimeout(function(){URL.revokeObjectURL(url);},4000);
+  }};
+  window.claude={use:async function(n){if(n==='downloads') return dlAPI;throw new Error('unavailable');}};
+})();
+</script>
+<script>(function(){var l=document.createElement('link');l.rel='canonical';l.href=location.origin+location.pathname;document.head.appendChild(l);})();</script>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 <meta name="color-scheme" content="light dark">
-<title>Logo Studio</title>
+<title>Logo Studio – gratis logo maker, CV en poster ontwerpen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Anton&family=Bebas+Neue&family=Bungee&family=Cinzel:wght@700&family=DM+Sans:wght@400;700&family=Lobster&family=Lora:wght@400&family=Montserrat:wght@800&family=Orbitron:wght@800&family=Oswald:wght@600&family=Pacifico&family=Permanent+Marker&family=Playfair+Display:wght@800&family=Poppins:wght@600&family=Press+Start+2P&family=Abril+Fatface&family=Righteous&family=Fredoka:wght@600&family=Caveat:wght@700&family=Dancing+Script:wght@700&family=Archivo+Black&family=Space+Grotesk:wght@700&family=Cormorant+Garamond:wght@700&family=Staatliches&family=Yeseva+One&display=swap" rel="stylesheet">
@@ -432,6 +463,32 @@ header{height:54px;padding:0 8px;gap:2px;background:color-mix(in srgb,var(--pane
 .dirtag{font-style:normal;font-size:10px;font-weight:700;padding:1px 6px;border-radius:6px;background:var(--chip);color:var(--accent);white-space:nowrap}
 #adock .hs{margin:2px -12px 6px;padding-left:12px;padding-right:12px}
 .concept .link{display:block;margin:6px auto 0}
+/* ===== v8: desktop en website ===== */
+.about{margin-top:28px;padding-top:6px;border-top:1px solid var(--line)}
+.about h2{font-size:18px;margin:14px 0 6px}
+.about h3{font-size:15px;margin:18px 0 6px}
+.about p,.about li{font-size:13.5px;line-height:1.55;color:var(--muted)}
+.about ul{padding-left:18px;margin:6px 0}
+.about details{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0;background:var(--panel)}
+.about summary{font-weight:600;font-size:13.5px;cursor:pointer;color:var(--ink)}
+.about details p{margin:8px 0 0}
+@media (min-width:900px){
+  #app{display:grid;grid-template-columns:minmax(0,1fr) 400px;grid-template-rows:auto auto minmax(0,1fr) auto}
+  header{grid-column:1/-1;grid-row:1}
+  #adock{grid-column:1;grid-row:2}
+  #stage{grid-column:1;grid-row:3/5}
+  #sheet{grid-column:2;grid-row:2/4;height:auto!important;min-height:0;overflow-y:auto!important;overflow-x:hidden;padding:14px 16px 24px!important;border-left:1px solid var(--line);border-top:0!important;border-radius:0!important;margin:0!important;box-shadow:none!important;transition:none}
+  #sheet::before,#sheet.open::before{display:none!important}
+  #tabs{grid-column:2;grid-row:4;border-left:1px solid var(--line);box-shadow:none}
+  #ov{align-items:center}
+  .card{border-radius:22px!important;max-height:88vh}
+  #home .wrap,#ai .wrap,#mock .wrap{max-width:1040px}
+  #wiz .wrap{max-width:720px}
+  .tgrid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  .cgrid{grid-template-columns:repeat(4,1fr)}
+  #quick{left:50%;right:auto;transform:translateX(-50%);max-width:640px}
+  .shapes.c .shp,.stick.c button{width:calc((100% - 35px)/6)}
+}
 [data-noai] .aifab,[data-noai] [data-d="asst"],[data-noai] [data-d="fill"],[data-noai] [data-d="coach"]{display:none!important}
 </style>
 </head>
@@ -499,28 +556,6 @@ header{height:54px;padding:0 8px;gap:2px;background:color-mix(in srgb,var(--pane
   <div class="iskip">Tik om door te gaan</div>
 </div>
 
-<script>
-/* Zelfstandige versie: geen Claude-omgeving, dus bewaren via het deelmenu en zonder AI */
-(function(){
-  if(window.claude) return;
-  document.documentElement.setAttribute('data-noai','1');
-  const dlAPI={save:async function(o){
-    const filename=o.filename,data=o.data;
-    const type=/\.json$/i.test(filename)?'application/json':/\.pdf$/i.test(filename)?'application/pdf':/\.jpe?g$/i.test(filename)?'image/jpeg':'image/png';
-    const blob=data instanceof Blob?data:new Blob([data],{type:type});
-    const file=new File([blob],filename,{type:blob.type||type});
-    try{
-      if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:filename});return;}
-    }catch(e){
-      if(e&&e.name==='AbortError'){const er=new Error('declined');er.code='declined';throw er;}
-    }
-    const url=URL.createObjectURL(blob),a=document.createElement('a');
-    a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
-    setTimeout(function(){URL.revokeObjectURL(url);},4000);
-  }};
-  window.claude={use:async function(n){if(n==='downloads') return dlAPI;throw new Error('unavailable');}};
-})();
-</script>
 <script>
 (()=>{
 'use strict';
@@ -1876,8 +1911,10 @@ function pFile(){
 }
 const PANELS={add:pAdd,style:pStyle,layers:pLayers,canvas:pCanvas,file:pFile};
 function syncTabs(){$$('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));}
+const DESK=()=>{try{return window.matchMedia('(min-width:900px)').matches;}catch(e){return false;}};
 function buildPanel(){
   syncTabs();
+  if(!tab&&DESK()) tab='add';
   if(!tab){sheet.classList.remove('open');sheet.innerHTML='';sheet.dataset.t='';return;}
   const keep=sheet.dataset.t===tab?sheet.scrollTop:0;
   sheet.classList.add('open');sheet.dataset.t=tab;sheet.innerHTML=PANELS[tab]();sheet.scrollTop=keep;
@@ -2039,6 +2076,11 @@ document.addEventListener('keydown',e=>{
   if(m&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?redo():undo();}
   else if(m&&e.key.toLowerCase()==='y'){e.preventDefault();redo();}
   else if((e.key==='Delete'||e.key==='Backspace')&&selList().length){delSel(selList());commit();updateQuick();buildPanel();render();}
+  else if(m&&e.key.toLowerCase()==='d'&&selList().length){e.preventDefault();dupSel(selList());commit();updateQuick();buildPanel();render();}
+  else if(m&&e.key.toLowerCase()==='a'){e.preventDefault();setSelection(S.objs.filter(o=>!o.hidden&&!o.locked).map(o=>o.id));updateQuick();buildPanel();render();}
+  else if(m&&e.key.toLowerCase()==='g'&&selList().length>1){e.preventDefault();toGroupSel(selList());commit();updateQuick();buildPanel();render();}
+  else if(e.key==='Escape'&&selList().length){clearSel();updateQuick();buildPanel();render();}
+  else if(e.key.startsWith('Arrow')&&selList().length){e.preventDefault();const st=e.shiftKey?10:1,k=e.key==='ArrowLeft'?'l':e.key==='ArrowRight'?'r':e.key==='ArrowUp'?'u':'d',ob=nudgeBig;nudgeBig=st===10;nudgeSel(k);nudgeBig=ob;commit();render();}
 });
 
 /* ---------- opslaan en exporteren ---------- */
@@ -2560,7 +2602,18 @@ function renderHome(){
    <div class="tgrid" id="tgrid">${tgridHTML(idx)}</div>
    ${list.length?`<div class="sec" style="margin-top:24px">Mijn projecten</div>${list.map(p=>`<div class="prow"><img src="${p.thumb}" alt=""><div class="pn"><b>${esc(p.name)}</b><small>${new Date(p.t).toLocaleDateString('nl-NL')}</small></div><button type="button" class="btn sm" data-h="proj" data-id="${p.id}">Open</button></div>`).join('')}`:''}
    <p class="hint" style="margin-top:24px">Alles wat je maakt blijft op dit apparaat. Je kunt elk sjabloon na het openen helemaal aanpassen.</p>
-   <p class="hint" style="margin-top:4px;text-align:center;opacity:.7">Logo Studio versie 7.1 • nieuw: zoeken, pipet, AI-variatie</p>
+   <section class="about">
+    <h2>Gratis logo maker en ontwerpapp</h2>
+    <p>Met Logo Studio maak je in je browser een logo, CV, visitekaartje, poster, flyer, Instagram-post, YouTube-thumbnail, uitnodiging, menukaart of briefpapier. Je hoeft niets te installeren en geen account aan te maken. Het werkt op je telefoon, tablet en computer.</p>
+    <ul><li>Meer dan 60 sjablonen, van emblemen en etiketten tot presentaties en facturen</li><li>Ruim 70 iconen, tientallen vormen, stickers en slimme elementen</li><li>Meerdere onderdelen tegelijk selecteren, groeperen en uitlijnen</li><li>Exporteer als PNG, JPG of PDF, ook met transparante achtergrond</li><li>Eigen kleurpaletten, kleurverlopen en een pipet</li></ul>
+    <h3>Veelgestelde vragen</h3>
+    <details><summary>Is Logo Studio gratis?</summary><p>Ja. Je kunt alles gratis gebruiken en je logo’s zonder watermerk opslaan.</p></details>
+    <details><summary>Moet ik een account maken?</summary><p>Nee. Je ontwerpen worden alleen op jouw apparaat bewaard in je browser. Wis je de websitegegevens van je browser, dan verdwijnen ze. Gebruik daarom Opslaan en Exporteren voor een reservekopie.</p></details>
+    <details><summary>Op welke apparaten werkt het?</summary><p>Op iPhone, Android, iPad, Windows, Mac en Linux, in Safari, Chrome, Edge en Firefox. Op je telefoon kun je de app op je beginscherm zetten.</p></details>
+    <details><summary>Mag ik mijn logo commercieel gebruiken?</summary><p>Ja, wat je zelf maakt mag je gebruiken. Let op dat een logo dat je met een sjabloon maakt ook door anderen met dat sjabloon gemaakt kan zijn. Voor een uniek merk pas je het sjabloon flink aan of begin je met een leeg doek.</p></details>
+    <details><summary>Hoe zit het met privacy?</summary><p>Er zijn geen accounts en geen tracking. Je foto’s en ontwerpen verlaten je apparaat niet. De lettertypes worden geladen via Google Fonts, waardoor Google je IP-adres kan zien.</p></details>
+    <p class="hint" style="text-align:center;opacity:.7;margin-top:18px">Logo Studio versie 8</p>
+   </section>
   </div>`;
   hydrateThumbs();
 }
@@ -3841,6 +3894,7 @@ function readColors(){
   ACC=cs.getPropertyValue('--accent').trim()||ACC;MUT=cs.getPropertyValue('--muted').trim()||MUT;
 }
 readColors();
+try{window.matchMedia('(min-width:900px)').addEventListener('change',()=>{if(editorOpen){buildPanel();resize();render();}});}catch(_){}
 try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{readColors();render();buildPanel();});}catch(_){}
 try{if(window.claude&&window.claude.use) window.claude.use('downloads').then(d=>{dl=d;}).catch(()=>{});}catch(_){}
 loadSettings();loadMyStuff();loadHomeStuff();getSample();
