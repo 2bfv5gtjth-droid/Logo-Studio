@@ -16,7 +16,7 @@
 <title>Logo Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Anton&family=Bebas+Neue&family=Bungee&family=Cinzel:wght@700&family=DM+Sans:wght@400;700&family=Lobster&family=Lora:wght@400&family=Montserrat:wght@800&family=Orbitron:wght@800&family=Oswald:wght@600&family=Pacifico&family=Permanent+Marker&family=Playfair+Display:wght@800&family=Poppins:wght@600&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Anton&family=Bebas+Neue&family=Bungee&family=Cinzel:wght@700&family=DM+Sans:wght@400;700&family=Lobster&family=Lora:wght@400&family=Montserrat:wght@800&family=Orbitron:wght@800&family=Oswald:wght@600&family=Pacifico&family=Permanent+Marker&family=Playfair+Display:wght@800&family=Poppins:wght@600&family=Press+Start+2P&family=Abril+Fatface&family=Righteous&family=Fredoka:wght@600&family=Caveat:wght@700&family=Dancing+Script:wght@700&family=Archivo+Black&family=Space+Grotesk:wght@700&family=Cormorant+Garamond:wght@700&family=Staatliches&family=Yeseva+One&display=swap" rel="stylesheet">
 <style>
 :root{
   --stage:#dde1e9; --dot:#c9ced9; --panel:#ffffff; --ink:#151924; --muted:#667085; --line:#e4e7ee;
@@ -412,6 +412,26 @@ header{height:54px;padding:0 8px;gap:2px;background:color-mix(in srgb,var(--pane
 .dotsl{display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid var(--line);border-top-color:var(--accent);animation:spin .8s linear infinite;vertical-align:-2px;margin-right:4px}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.dotsl{animation:none}}
+/* ===== v7 ===== */
+.shapes.c,.stick.c{display:flex;flex-wrap:wrap;justify-content:center;gap:7px}
+.shapes.c .shp,.stick.c button{flex:none;width:calc((100% - 35px)/6);aspect-ratio:1}
+.tacts{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+.tacts button{height:38px;border:0;border-radius:11px;background:var(--chip);font-size:12.5px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px}
+.tacts .dng{color:var(--danger)}
+.nudge{display:grid;grid-template-columns:repeat(4,1fr) 68px;gap:6px}
+.nudge button{height:42px;border:0;border-radius:11px;background:var(--chip);font-size:18px;font-weight:600}
+.nudge .stp{font-size:12px;background:var(--accent);color:var(--onaccent)}
+.pip{border:0;background:var(--chip);border-radius:8px;width:28px;height:28px;margin-left:8px;display:inline-grid;place-items:center;padding:0;vertical-align:middle}
+#stage.picking{cursor:crosshair}
+.gpre{flex:none;width:44px;height:32px;border:0;border-radius:9px}
+.cvar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.cvar button{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:6px;display:flex;flex-direction:column;gap:6px}
+.cvar img{width:100%;aspect-ratio:1;object-fit:contain;background:var(--chip);border-radius:8px}
+.cvar .sq{display:flex;height:10px;border-radius:5px;overflow:hidden}
+.cvar .sq i{flex:1}
+.dirtag{font-style:normal;font-size:10px;font-weight:700;padding:1px 6px;border-radius:6px;background:var(--chip);color:var(--accent);white-space:nowrap}
+#adock .hs{margin:2px -12px 6px;padding-left:12px;padding-right:12px}
+.concept .link{display:block;margin:6px auto 0}
 [data-noai] .aifab,[data-noai] [data-d="asst"],[data-noai] [data-d="fill"],[data-noai] [data-d="coach"]{display:none!important}
 </style>
 </head>
@@ -513,6 +533,7 @@ const reduced=()=>{try{return window.matchMedia('(prefers-reduced-motion: reduce
 
 /* ---------- iconen ---------- */
 const ICONS={
+ pipet:'<path d="m2 22 1-1h3l9-9"/><path d="M3 21v-3l9-9"/><path d="m15 6 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z"/>',
  undo:'<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',
  redo:'<path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/>',
  plus:'<path d="M12 5v14M5 12h14"/>',
@@ -568,7 +589,8 @@ const FONTS=[
  {n:'Anton',w:400},{n:'Bebas Neue',w:400},{n:'Oswald',w:600},{n:'Montserrat',w:800},{n:'Poppins',w:600},
  {n:'DM Sans',w:400},{n:'DM Sans Bold',fam:'DM Sans',w:700},{n:'Lora',w:400},
  {n:'Playfair Display',w:800},{n:'Cinzel',w:700},{n:'Pacifico',w:400},{n:'Lobster',w:400},
- {n:'Permanent Marker',w:400},{n:'Bungee',w:400},{n:'Orbitron',w:800},{n:'Press Start 2P',w:400}
+ {n:'Permanent Marker',w:400},{n:'Bungee',w:400},{n:'Orbitron',w:800},{n:'Press Start 2P',w:400},
+ {n:'Abril Fatface',w:400},{n:'Righteous',w:400},{n:'Fredoka',w:600},{n:'Caveat',w:700},{n:'Dancing Script',w:700},{n:'Archivo Black',w:400},{n:'Space Grotesk',w:700},{n:'Cormorant Garamond',w:700},{n:'Staatliches',w:400},{n:'Yeseva One',w:400}
 ];
 const fontDef=n=>FONTS.find(f=>f.n===n)||FONTS[0];
 const famOf=f=>f.fam||f.n;
@@ -579,7 +601,8 @@ const SHAPES=[['rect','Vierkant'],['round','Afgerond vierkant'],['ellipse','Cirk
   ['pentagon','Vijfhoek'],['hexagon','Zeshoek'],['star','Ster'],['burst','Burst'],['sparkle','Glans'],['shield','Schild'],
   ['heart','Hart'],['bolt','Bliksem'],['crown','Kroon'],['moon','Maan'],['drop','Druppel'],['leaf','Blad'],
   ['arrow','Pijl'],['plus','Plus'],['ribbon','Lint'],['speech','Tekstballon'],
-  ['octagon','Achthoek'],['trapezoid','Trapezium'],['parallelogram','Parallellogram'],['chevron','Chevron'],['scallop','Stempelrand'],['blob','Blob'],['tag','Prijskaartje'],['ticket','Ticket'],['flag','Vlag'],['gear','Tandwiel'],['cloud','Wolk'],['sun','Zon'],['flame','Vlam'],['mountain','Berg'],['wave','Golf'],['pine','Dennenboom'],['target','Roos']];
+  ['octagon','Achthoek'],['trapezoid','Trapezium'],['parallelogram','Parallellogram'],['chevron','Chevron'],['scallop','Stempelrand'],['blob','Blob'],['tag','Prijskaartje'],['ticket','Ticket'],['flag','Vlag'],['gear','Tandwiel'],['cloud','Wolk'],['sun','Zon'],['flame','Vlam'],['mountain','Berg'],['wave','Golf'],['pine','Dennenboom'],['target','Roos'],
+  ['xmark','Kruis'],['semicircle','Halve cirkel'],['halfring','Halve ring'],['righttri','Rechthoekige driehoek'],['kite','Vlieger'],['arch','Boog'],['quarter','Kwartcirkel'],['flower','Bloem']];
 const defP=k=>({round:.2,ring:.18,star:5,burst:14,icon:2})[k]??0;
 const STICKERS=['🔥','⭐','👑','🎮','⚽','🏀','🍔','🍕','☕','🌿','🚀','💎','🎯','🏆','❤️','⚡','🌙','☀️','🎵','📷','🐺','🦁','🦅','🐉','💪','🎨','✂️','🏠','🚗','✈️','🌊','🍀','🎂','🎈','🥂','💼'];
 const PAL=['#151924','#ffffff','#e63946','#ff8c1a','#ffd23f','#2ec4b6','#3a4bff','#7b2cbf','#ff5fa2','#1b9e4b','#8d99ae','#0b2545'];
@@ -1051,6 +1074,14 @@ function shapePath(c,o){
    case 'wave':{const n=3,st=w/(n*2);c.moveTo(-hw,0);for(let k=0;k<n*2;k++){c.quadraticCurveTo(-hw+(k+.5)*st,(k%2?1:-1)*hh*.6,-hw+(k+1)*st,0);}c.lineTo(hw,hh);c.lineTo(-hw,hh);c.closePath();break;}
    case 'pine': poly([[0,-.5],[.3,-.1],[.15,-.1],[.4,.25],[.1,.25],[.1,.5],[-.1,.5],[-.1,.25],[-.4,.25],[-.15,-.1],[-.3,-.1]]);break;
    case 'target':{[1,.72,.44,.16].forEach(k=>{c.moveTo(hw*k,0);c.ellipse(0,0,hw*k,hh*k,0,0,Math.PI*2);});break;}
+   case 'xmark': poly([[-.5,-.35],[-.35,-.5],[0,-.15],[.35,-.5],[.5,-.35],[.15,0],[.5,.35],[.35,.5],[0,.15],[-.35,.5],[-.5,.35],[-.15,0]]);break;
+   case 'semicircle': c.moveTo(-hw,hh);c.ellipse(0,hh,hw,h,0,Math.PI,Math.PI*2);c.closePath();break;
+   case 'halfring': c.moveTo(-hw,hh);c.ellipse(0,hh,hw,h,0,Math.PI,Math.PI*2);c.lineTo(hw*.6,hh);c.ellipse(0,hh,hw*.6,h*.6,0,Math.PI*2,Math.PI,true);c.closePath();break;
+   case 'righttri': poly([[-.5,-.5],[.5,.5],[-.5,.5]]);break;
+   case 'kite': poly([[0,-.5],[.35,-.1],[0,.5],[-.35,-.1]]);break;
+   case 'arch':{const r=Math.min(hw,hh);c.moveTo(-hw,hh);c.lineTo(-hw,-hh+r);c.ellipse(0,-hh+r,hw,r,0,Math.PI,Math.PI*2);c.lineTo(hw,hh);c.closePath();break;}
+   case 'quarter': c.moveTo(-hw,hh);c.lineTo(-hw,-hh);c.ellipse(-hw,hh,w,h,0,-Math.PI/2,0);c.closePath();break;
+   case 'flower':{for(let i=0;i<6;i++){const a=i*Math.PI/3,cx2=Math.cos(a)*.3*w,cy2=Math.sin(a)*.3*h;c.moveTo(cx2+.2*w,cy2);c.ellipse(cx2,cy2,.2*w,.2*h,0,0,Math.PI*2);}c.moveTo(.18*w,0);c.ellipse(0,0,.18*w,.18*h,0,0,Math.PI*2);break;}
    case 'qr':{
     const m=qrCached(o.data);
     if(!m){c.rect(-hw,-hh,w,h);break;}
@@ -1256,7 +1287,9 @@ $('#mbar').addEventListener('click',e=>{
 function snapOrigs(list){return new Map(list.map(o=>[o.id,{x:o.x,y:o.y,w:o.w,h:o.h,size:o.size,ls:o.ls,rot:o.rot,sw:o.sw||0}]));}
 cv.addEventListener('pointerdown',e=>{
   try{cv.setPointerCapture(e.pointerId);}catch(_){}
-  const p=pos(e);ptrs.set(e.pointerId,p);
+  const p=pos(e);
+  if(pipetKey){pipePick(p);return;}
+  ptrs.set(e.pointerId,p);
   if(ptrs.size===2){
     const [a,b]=[...ptrs.values()];
     pinch={d0:Math.hypot(a.x-b.x,a.y-b.y)||1,c0:{x:(a.x+b.x)/2,y:(a.y+b.y)/2},z0:view.z,ox0:view.ox,oy0:view.oy};
@@ -1378,6 +1411,7 @@ cv.addEventListener('wheel',e=>{e.preventDefault();zoomAt(pos(e),Math.exp(-e.del
 document.addEventListener('gesturestart',e=>e.preventDefault());
 
 function drawSel(){
+  if(noSel) return;
   const list=selList().filter(o=>!o.hidden);
   if(list.length===1){
     const o=list[0],s=toScr(o.x,o.y),hw=o.w*view.z/2,hh=o.h*view.z/2;
@@ -1488,6 +1522,7 @@ function pMulti(list){
   <div class="seg"><button type="button" class="${alignRef==='sel'?'on':''}" data-act="mref" data-v="sel">Op de selectie</button><button type="button" class="${alignRef==='doek'?'on':''}" data-act="mref" data-v="doek">Op het doek</button></div>
   <div class="sec">Gelijk verdelen</div>
   <div class="two"><button type="button" class="btn sm" data-act="mdist" data-v="h" ${list.length<3?'disabled':''}>Horizontaal</button><button type="button" class="btn sm" data-act="mdist" data-v="v" ${list.length<3?'disabled':''}>Verticaal</button></div>
+  ${nudgeHTML()}
   <div class="sec">Alles tegelijk</div>
   ${colorF('Kleur voor alles','*fill.c1',col)}
   ${sl('Dekking','*opacity',0,1,.01,list[0].opacity,'pct')}
@@ -1560,7 +1595,7 @@ function move(o,to){
   S.objs.splice(i,1);S.objs.splice(clamp(to,0,S.objs.length),0,o);
 }
 const isNeutral=h=>{const n=parseInt(h.slice(1),16),r=n>>16,g=(n>>8)&255,b=n&255;return Math.max(r,g,b)-Math.min(r,g,b)<40&&(lum(h)<.16||lum(h)>.9);};
-function applyTheme(p){
+function applyTheme(p,quiet){
   const oldDark=S.bg?lum(S.bg)<.45:false,newDark=lum(p.bg)<.45,flip=oldDark!==newDark;
   const cnt=new Map();
   const cols=o=>{const r=[];if(o.type==='image') return r;if(o.fill.t!=='none'){r.push(['fill.c1',o.fill.c1]);if(o.fill.t==='grad') r.push(['fill.c2',o.fill.c2]);}if(o.sw>0) r.push(['stroke',o.stroke]);if(o.glow) r.push(['glow',o.glow]);return r;};
@@ -1575,6 +1610,7 @@ function applyTheme(p){
     set(o,path,nv);
   }));
   if(S.bg){S.bg=p.bg;S.bg2=hexMix(p.bg,p.p2,.28);}
+  if(quiet) return;
   commit();render();buildPanel();toast('Kleurthema “'+p.n+'” toegepast');
 }
 const TSTYLES=[['plain','Normaal'],['outline','Contour'],['shadow','Schaduw'],['sticker','Sticker'],['glow','Gloed'],['gold','Goud']];
@@ -1601,37 +1637,150 @@ const colorF=(lab,key,val)=>{
   const v=String(val).toLowerCase();
   const sw=(c,x='')=>`<button type="button" class="sw${c.toLowerCase()===v?' on':''}${x}" style="background:${c}" data-act="setc" data-k="${key}" data-v="${c}" aria-label="Kleur ${c}"></button>`;
   const dc=designColors().filter(c=>!PAL.includes(c)).slice(0,8);
-  return `<div class="cf"><span>${lab}</span><div class="sws">${PAL.map(c=>sw(c)).join('')}<input type="color" data-k="${key}" value="${val}" aria-label="Eigen kleur"></div>
+  return `<div class="cf"><span>${lab}<button type="button" class="pip" data-act="pipet" data-k="${key}" aria-label="Kleur van het doek pakken">${ico('pipet',15)}</button></span><div class="sws">${PAL.map(c=>sw(c)).join('')}<input type="color" data-k="${key}" value="${val}" aria-label="Eigen kleur"></div>
    ${dc.length?`<div class="sws sws2"><em>In je ontwerp</em>${dc.map(c=>sw(c)).join('')}</div>`:''}
    <div class="sws sws2"><em>Mijn kleuren</em>${myCols.map(c=>sw(c,' fav')).join('')}<button type="button" class="sw plus" data-act="favadd" data-v="${val}" aria-label="Bewaar deze kleur in Mijn kleuren">+</button></div></div>`;
 };
 
-let addSub='shapes';const addCat={shapes:'basic',icons:'food',stickers:'food',elements:'label',templates:'badge'};
-function pAdd(){
+const pickR=a=>a[Math.random()*a.length|0];
+const sampleN=(a,n)=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[b[i],b[j]]=[b[j],b[i]];}return b.slice(0,n);};
+let addSub='shapes',addQ='';const addCat={shapes:'basic',icons:'food',stickers:'food',elements:'label',templates:'badge'};
+const TPLCATS=[...CATS.filter(c=>!['all','fav','mine'].includes(c[0])),['mine','Mijn sjablonen']];
+const chipRow=(list,cur)=>`<div class="hs" style="margin:8px -14px 6px">${list.map(([k,n])=>`<button type="button" class="fchip t${cur===k?' on':''}" data-act="acat" data-v="${k}">${n}</button>`).join('')}</div>`;
+const shpBtn=k=>{const n=(SHAPES.find(s=>s[0]===k)||['',k])[1];return `<button type="button" class="shp" data-act="addShape" data-v="${k}" aria-label="${n}"><canvas data-shape="${k}" width="120" height="120"></canvas></button>`;};
+const icoBtn=k=>`<button type="button" class="shp" data-act="addIcon" data-v="${k}" aria-label="${ICONLIB[k].n}"><canvas data-icon="${k}" width="120" height="120"></canvas></button>`;
+const elBtn=(e,i)=>`<button type="button" class="elb" data-act="addEl" data-v="${i}"><canvas data-el="${i}" width="140" height="140"></canvas>${e.n}</button>`;
+function searchHTML(q){
+  const has=t=>String(t).toLowerCase().includes(q);
+  const sh=SHAPES.filter(s=>has(s[1])||has(s[0])).map(s=>s[0]);
+  const ic=Object.keys(ICONLIB).filter(k=>has(ICONLIB[k].n)||has(k));
+  const el=ELEMENTS.map((e,i)=>[e,i]).filter(([e])=>has(e.n));
+  let h='';
+  if(sh.length) h+=`<div class="sec">Vormen</div><div class="shapes c">${sh.map(shpBtn).join('')}</div>`;
+  if(ic.length) h+=`<div class="sec">Iconen</div><div class="shapes c">${ic.map(icoBtn).join('')}</div>`;
+  if(el.length) h+=`<div class="sec">Elementen</div><div class="elgrid">${el.map(([e,i])=>elBtn(e,i)).join('')}</div>`;
+  return h||`<p class="hint" style="margin-top:12px">Niets gevonden voor “${esc(q)}”. Probeer een ander woord, bijvoorbeeld ster, hart of koffie.</p>`;
+}
+function addBody(){
+  if(addQ) return searchHTML(addQ);
   const cur=addCat[addSub];
-  const chips=list=>`<div class="hs" style="margin:8px 0 6px">${list.map(([k,n])=>`<button type="button" class="fchip t${cur===k?' on':''}" data-act="acat" data-v="${k}">${n}</button>`).join('')}</div>`;
-  let h=`<div class="sec first">Toevoegen</div>
-  <div class="two"><button type="button" class="btn primary" data-act="addText">${ico('type',20)} Tekst</button><button type="button" class="btn" data-act="pickImage">${ico('image',20)} Foto of logo</button></div>
-  <div class="seg s5" style="margin-top:10px">${[['shapes','Vormen'],['icons','Iconen'],['stickers','Stickers'],['elements','Elementen'],['templates','Sjablonen']].map(([k,n])=>`<button type="button" class="${addSub===k?'on':''}" data-act="asub" data-v="${k}">${n}</button>`).join('')}</div>`;
   if(addSub==='shapes'){
     const cat=LIBSH.find(c=>c[0]===cur)||LIBSH[0];
-    h+=chips(LIBSH.map(c=>[c[0],c[1]]))+`<div class="shapes">${cat[2].map(k=>{const n=(SHAPES.find(s=>s[0]===k)||['',k])[1];return `<button type="button" class="shp" data-act="addShape" data-v="${k}" aria-label="${n}"><canvas data-shape="${k}" width="120" height="120"></canvas></button>`;}).join('')}</div>`;
-  }else if(addSub==='icons'){
-    const names=Object.keys(ICONLIB).filter(k=>ICONLIB[k].c===cur);
-    h+=chips(ICON_CATS)+`<div class="shapes">${names.map(k=>`<button type="button" class="shp" data-act="addIcon" data-v="${k}" aria-label="${ICONLIB[k].n}"><canvas data-icon="${k}" width="120" height="120"></canvas></button>`).join('')}</div><p class="hint">Iconen zijn lijntekeningen. Pas kleur en lijndikte aan bij Stijl.</p>`;
-  }else if(addSub==='stickers'){
-    h+=chips(STICK_CATS)+`<div class="stick">${(STICK[cur]||[]).map(s=>`<button type="button" data-act="addSticker" data-v="${s}" aria-label="Sticker ${s}">${s}</button>`).join('')}</div>`;
-  }else if(addSub==='elements'){
-    h+=chips(ELCATS);
-    if(cur==='qr') h+=`<div class="qrrow"><input id="qrin" class="inp" placeholder="https://jouwsite.nl" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="200" aria-label="Adres voor de QR-code"><button type="button" class="btn sm primary" data-act="addqr">Maak</button></div><p class="hint">Een QR-code naar je website, menu of profiel. Test hem met je camera voordat je print.</p>`;
-    else h+=`<div class="elgrid">${ELEMENTS.map((e,i)=>e.c===cur?`<button type="button" class="elb" data-act="addEl" data-v="${i}"><canvas data-el="${i}" width="140" height="140"></canvas>${e.n}</button>`:'').join('')}</div><p class="hint">Elementen komen als groep op je doek. Tik erop en kies Losmaken als je onderdelen los wilt bewerken.</p>`;
-  }else{
-    const idx=TPL.map((t,i)=>i).filter(i=>TPL[i].cat===cur);
-    h+=chips(TPLCATS)+`<p class="hint" style="margin:4px 0 8px">Tik op een sjabloon om het als groep aan je ontwerp toe te voegen. Zo gebruik je bijvoorbeeld een badge of etiket in je eigen logo.</p><div class="tplgrid">${idx.length?idx.map(i=>`<button type="button" class="elb" data-act="inserttpl" data-v="${i}"><span class="tt"><img alt="" src="${thumbOf(i)}"></span>${esc(TPL[i].name)}</button>`).join(''):'<p class="hint">Nog niets in deze categorie.</p>'}</div>`;
+    return chipRow(LIBSH.map(c=>[c[0],c[1]]),cat[0])+`<div class="shapes c">${cat[2].map(shpBtn).join('')}</div>`;
   }
-  return h;
+  if(addSub==='icons'){
+    const names=Object.keys(ICONLIB).filter(k=>ICONLIB[k].c===cur);
+    return chipRow(ICON_CATS,cur)+`<div class="shapes c">${names.map(icoBtn).join('')}</div><p class="hint">Iconen zijn lijntekeningen. Pas kleur en lijndikte aan bij Stijl.</p>`;
+  }
+  if(addSub==='stickers') return chipRow(STICK_CATS,cur)+`<div class="stick c">${(STICK[cur]||[]).map(s=>`<button type="button" data-act="addSticker" data-v="${s}" aria-label="Sticker ${s}">${s}</button>`).join('')}</div>`;
+  if(addSub==='elements'){
+    let h=chipRow(ELCATS,cur);
+    if(cur==='qr') return h+`<div class="qrrow"><input id="qrin" class="inp" placeholder="https://jouwsite.nl" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="200" aria-label="Adres voor de QR-code"><button type="button" class="btn sm primary" data-act="addqr">Maak</button></div><p class="hint">Een QR-code naar je website, menu of profiel. Test hem met je camera voordat je print.</p>`;
+    return h+`<div class="elgrid">${ELEMENTS.map((e,i)=>e.c===cur?elBtn(e,i):'').join('')}</div><p class="hint">Elementen komen als groep op je doek. Tik erop en kies Losmaken als je onderdelen los wilt bewerken.</p>`;
+  }
+  if(cur==='mine'){
+    return chipRow(TPLCATS,cur)+(myTpls.length?`<p class="hint" style="margin:4px 0 8px">Je eigen sjablonen. Tik om ze als groep toe te voegen.</p><div class="tplgrid">${myTpls.map(t=>`<button type="button" class="elb" data-act="insertmine" data-v="${t.id}"><span class="tt"><img alt="" src="${t.thumb}"></span>${esc(t.name)}</button>`).join('')}</div>`:`<p class="hint">Nog geen eigen sjablonen. Kies in het menu “Bewaar als sjabloon”.</p>`);
+  }
+  const idx=TPL.map((t,i)=>i).filter(i=>TPL[i].cat===cur);
+  return chipRow(TPLCATS,cur)+`<p class="hint" style="margin:4px 0 8px">Tik op een sjabloon om het als groep aan je ontwerp toe te voegen. Zo gebruik je bijvoorbeeld een badge of etiket in je eigen logo.</p><div class="tplgrid">${idx.length?idx.map(i=>`<button type="button" class="elb" data-act="inserttpl" data-v="${i}"><span class="tt"><img alt="" src="${thumbOf(i)}"></span>${esc(TPL[i].name)}</button>`).join(''):'<p class="hint">Nog niets in deze categorie.</p>'}</div>`;
 }
-const TPLCATS=CATS.filter(c=>!['all','fav','mine'].includes(c[0]));
+function pAdd(){
+  return `<div class="sec first">Toevoegen</div>
+  <div class="two"><button type="button" class="btn primary" data-act="addText">${ico('type',20)} Tekst</button><button type="button" class="btn" data-act="pickImage">${ico('image',20)} Foto of logo</button></div>
+  <input id="asearch" class="inp" type="search" placeholder="Zoek een vorm, icoon of element" value="${esc(addQ)}" maxlength="30" autocomplete="off" autocapitalize="off" style="margin:10px 0 0" aria-label="Zoeken">
+  <div class="seg s5" style="margin-top:10px">${[['shapes','Vormen'],['icons','Iconen'],['stickers','Stickers'],['elements','Elementen'],['templates','Sjablonen']].map(([k,n])=>`<button type="button" class="${addSub===k&&!addQ?'on':''}" data-act="asub" data-v="${k}">${n}</button>`).join('')}</div>
+  <div id="addbody">${addBody()}</div>`;
+}
+
+function insertObjs(objs,W,H){
+  let list=objs.filter(o=>!(o.type==='shape'&&o.w>=W*.95&&o.h>=H*.95));
+  if(!list.length) list=objs;
+  if(!list.length){toast('Er is niets om toe te voegen.');return;}
+  const bb=selBounds(list),k=Math.min(1.6,S.W*.8/bb.w,S.H*.8/bb.h),g='g'+uid();
+  list.forEach(o=>{
+    o.x=S.W/2+(o.x-bb.cx)*k;o.y=S.H/2+(o.y-bb.cy)*k;o.w*=k;o.h*=k;o.sw=(o.sw||0)*k;o.gid=g;
+    if(o.type==='text'){o.size=Math.max(6,o.size*k);o.ls=(o.ls||0)*k;refreshText(o);}
+  });
+  S.objs.push(...list);setSelection(list.map(o=>o.id));commit();updateQuick();render();buildPanel();
+  toast('Toegevoegd als groep. Sleep om te verplaatsen.');
+}
+function insertTemplate(i){const t=TPL[i];insertObjs(t.build(),t.W,t.H);}
+function insertMine(id){
+  const t=myTpls.find(q=>q.id===id);if(!t) return;
+  try{
+    const d=JSON.parse(t.data),imgs=d.imgs||{};
+    const objs=(d.objs||[]).map(r=>cleanObj(r,imgs)).filter(Boolean);
+    Object.keys(imgs).forEach(k=>{if(!S.imgs[k]) S.imgs[k]=imgs[k];});
+    insertObjs(objs,d.W||1000,d.H||1000);
+  }catch(e){toast('Dit sjabloon kon niet worden toegevoegd.');}
+}
+function renameTpl(id){
+  const t=myTpls.find(q=>q.id===id);if(!t) return;
+  ovc.innerHTML=ovHead('Sjabloon hernoemen')+`<input id="rnin" class="inp big" value="${esc(t.name)}" maxlength="30" aria-label="Nieuwe naam"><div class="two"><button type="button" class="btn" data-ov="close">Annuleren</button><button type="button" class="btn primary" data-rn="${esc(id)}">Opslaan</button></div>`;
+  showOv();setTimeout(()=>{const i=$('#rnin');if(i){i.focus();i.select();}},80);
+}
+
+/* verfijnd verplaatsen */
+let nudgeBig=false;
+const nudgeHTML=()=>`<div class="sec">Verfijnd verplaatsen</div><div class="nudge">${[['l','←','links'],['u','↑','omhoog'],['d','↓','omlaag'],['r','→','rechts']].map(([k,a,n])=>`<button type="button" data-act="nudge" data-v="${k}" aria-label="Naar ${n}">${a}</button>`).join('')}<button type="button" class="stp" data-act="nstep" aria-label="Stapgrootte wisselen">${nudgeBig?'10':'1'} px</button></div>`;
+function nudgeSel(k){const st=nudgeBig?10:1;selList().forEach(o=>{if(k==='l') o.x-=st;else if(k==='r') o.x+=st;else if(k==='u') o.y-=st;else o.y+=st;});}
+
+/* pipet */
+let pipetKey=null,noSel=false;
+function pipePick(p){
+  const key=pipetKey;pipetKey=null;$('#stage').classList.remove('picking');
+  const l=toLog(p);
+  if(l.x<0||l.y<0||l.x>S.W||l.y>S.H){toast('Tik binnen het doek om een kleur te pakken.');return;}
+  noSel=true;render();
+  let c=null;
+  try{const d=X.getImageData(Math.round(p.x*dpr),Math.round(p.y*dpr),1,1).data;if(d[3]>0) c='#'+[d[0],d[1],d[2]].map(v=>v.toString(16).padStart(2,'0')).join('');}catch(e){}
+  noSel=false;render();
+  if(!c){toast('Geen kleur gevonden op die plek.');return;}
+  setVal(key,c);commit();buildPanel();toast('Kleur '+c+' gepakt');
+}
+const GRADS=[['#3a4bff','#ff5fa2'],['#ff8c1a','#e63946'],['#2ec4b6','#3a4bff'],['#ffd23f','#ff8c1a'],['#7b2cbf','#ff5fa2'],['#1b9e4b','#ffd23f'],['#0b2545','#3a4bff'],['#151924','#7b2cbf'],['#ff5fa2','#ffd23f'],['#e63946','#7b2cbf']];
+
+/* probeer kleuren */
+let ctPals=[];
+function colorTry(){
+  if(!S.objs.length){toast('Zet eerst iets op je doek.');return;}
+  ctPals=Array.from({length:6},(_,i)=>i<2?pickR(PALS):randomTheme());
+  const keep={o:JSON.stringify(S.objs),bg:S.bg,bg2:S.bg2},th=[];
+  try{
+    ctPals.forEach(p=>{
+      S.objs=JSON.parse(keep.o);applyTheme(p,true);
+      th.push(renderExport(130/Math.max(S.W,S.H),true,true).toDataURL('image/jpeg',.75));
+    });
+  }finally{S.objs=JSON.parse(keep.o);S.bg=keep.bg;S.bg2=keep.bg2;S.objs.forEach(o=>o.type==='text'&&refreshText(o));}
+  ovc.innerHTML=ovHead('Probeer kleuren')+`<p class="hint">Tik op een variant om hem te gebruiken.</p><div class="cvar">${th.map((u,i)=>`<button type="button" data-ct="${i}"><img alt="" src="${u}"><span class="sq">${['bg','p1','p2','ac'].map(k=>`<i style="background:${ctPals[i][k]}"></i>`).join('')}</span></button>`).join('')}</div><div class="two" style="margin-top:12px"><button type="button" class="btn" data-ct="more">${ico('dice',18)} Andere kleuren</button><button type="button" class="btn" data-ov="close">Sluiten</button></div>`;
+  showOv();
+}
+
+/* AI-hulpjes met variatie */
+const ASST_POOL=['Maak de tekst beter leesbaar','Zet een slogan onder de naam','Voeg een passend icoon toe','Maak het strakker en minimalistischer','Geef het een retro-uitstraling','Kies andere kleuren die goed samengaan','Maak alles iets groter en gecentreerd','Voeg een rand of kader toe','Maak het speelser met een extra vorm','Geef het een luxe uitstraling met goud','Maak het contrast sterker','Voeg een subtiele schaduw toe','Maak de naam veel groter','Zet er een cirkel of badge omheen','Maak het futuristisch met gloed','Vervang het lettertype door iets opvallends','Voeg een decoratieve lijn toe','Draai de compositie: icoon naast de naam','Maak het rustiger met meer witruimte','Geef het een stoere streetwear-look'];
+let _ac=null;
+const asstChips=()=>_ac||(_ac=[{t:'🎲 Verras me',q:()=>{const d=pickR(ART_DIRS);return 'Verras me: geef dit ontwerp een nieuwe uitstraling in de stijl van '+d[1]+'. Wees gedurfd, maar laat de tekst leesbaar en behoud de merknaam.';}},...sampleN(ASST_POOL,5).map(t=>({t,q:()=>t}))]);
+const WRITE_POOL=[['Korter','Maak deze tekst korter en krachtiger.'],['Leuker','Maak deze tekst leuker en speelser.'],['Professioneler','Maak deze tekst professioneler en zakelijker.'],['In het Engels','Vertaal deze tekst naar het Engels.'],['Slogan','Bedenk een pakkende slogan van maximaal 6 woorden die past bij dit merk of bedrijf.'],['Stoerder','Maak deze tekst stoerder en directer.'],['Warmer','Maak deze tekst warmer en persoonlijker.'],['Grappig','Maak hier een grappige variant van.'],['Mysterieus','Maak deze tekst mysterieus en intrigerend.'],['Als vraag','Schrijf dit als een prikkelende vraag.'],['Met een woordgrapje','Verwerk een slim woordgrapje in deze tekst.'],['Beknopt','Maak er drie woorden van, zo krachtig mogelijk.']];
+let _ws=null;
+const writeSet=()=>_ws||(_ws=[WRITE_POOL[0],...sampleN(WRITE_POOL.slice(1),5)]);
+
+/* meer variatie zonder AI */
+const SLOGANS_L=['','','Sinds 2026','Met liefde gemaakt','Kwaliteit voorop','Puur en eerlijk','Gewoon goed','Voor iedereen','Echt vakwerk','Elke dag vers','Durf te kiezen','Klein maar fijn'];
+const BIZ=['bakkerij','voetbalclub','gamekanaal','yogastudio','foodtruck','fietsenmaker','kattencafé','ijssalon','skatewinkel','muziekschool','tuincentrum','barbershop','pizzeria','dansschool','bloemist','boekhandel','koffiebranderij','fotostudio','klimhal','podcast over reizen','webwinkel voor planten','tattooshop','kinderopvang','sushirestaurant','brouwerij','schoonheidssalon','autowasstraat','imkerij','escape room','hondentrimsalon'];
+const TWIST=['met een vleugje ruimtevaart','in retro-stijl','met een dier als mascotte','in maar twee kleuren','vrolijk en kleurrijk','stoer en donker','minimalistisch en chic','geïnspireerd op de zee','met een knipoog naar de jaren 80','handgemaakt en warm','futuristisch en scherp','rustig en natuurlijk','met een geheimzinnig randje','gebouwd rond een bliksem','met een ster als symbool','in pastelkleuren','gedurfd en groot','met een vleugje Japan','als een oud stempel','sportief en snel'];
+const CITIES=['Rotterdam','Utrecht','Groningen','Eindhoven','Gent','Antwerpen','Den Haag','Breda','Leiden','Zwolle'];
+const newBrief=()=>`Een logo voor een ${pickR(BIZ)} in ${pickR(CITIES)}, ${pickR(TWIST)}`;
+let brief=newBrief();
+function localConcepts(p,n){
+  n=n||4;
+  const hits=KW.filter(k=>k[1].test(p)).map(k=>k[0]);
+  const rest=sampleN(STYLES.map(s=>s[0]).filter(s=>!hits.includes(s)),8);
+  const pool=[...new Set([...hits.slice(0,2),...rest])].slice(0,n),name=guessName(p);
+  return pool.map((s,i)=>({name,slogan:pickR(SLOGANS_L),style:s,pal:palFor(p,i),icon:(ICON_POOL[s]&&ICON_POOL[s].length)?pickR(ICON_POOL[s]):undefined,why:hits.includes(s)?'Past bij je woorden.':'Een verrassende keuze.',dir:'',v:Math.random()*8|0}));
+}
+function surprise(){
+  openWizard({step:4,name:pickR(NAMES),slogan:pickR(SLOGANS_L),style:pickR(STYLES)[0],pal:Math.random()*PALS.length|0,v:Math.random()*8|0});
+}
 
 function pStyle(){
   const ml=selList();if(ml.length>1) return pMulti(ml);
@@ -1640,7 +1789,7 @@ function pStyle(){
   let h=o.gid?`<div class="two" style="margin-bottom:8px"><button type="button" class="btn sm" data-act="gselect">Hele groep kiezen</button><button type="button" class="btn sm" data-act="gungroup">Groep opheffen</button></div>`:'';
   if(o.type==='text'){
     h+=`<div class="sec first">Tekst</div><textarea id="txt" rows="2" maxlength="400" spellcheck="false" aria-label="Tekst">${esc(o.text)}</textarea>`;
-    if(aiAvail()) h+=`<div class="sec">AI-schrijfhulp</div><div class="hs">${WRITE_CHIPS.map(([n],i)=>`<button type="button" class="fchip t" data-act="aichip" data-v="${i}" ${aiTextBusy?'disabled':''}>${n}</button>`).join('')}</div><div class="aiw"><input id="aiq" class="inp" placeholder="Of vraag iets, bijv. schrijf een korte profieltekst" maxlength="120"><button type="button" class="btn sm primary" data-act="aiwrite" ${aiTextBusy?'disabled':''}>${aiTextBusy?'Bezig…':'Schrijf'}</button></div>`;
+    if(aiAvail()) h+=`<div class="sec">AI-schrijfhulp</div><div class="hs">${writeSet().map(([n],i)=>`<button type="button" class="fchip t" data-act="aichip" data-v="${i}" ${aiTextBusy?'disabled':''}>${n}</button>`).join('')}</div><div class="aiw"><input id="aiq" class="inp" placeholder="Of vraag iets, bijv. schrijf een korte profieltekst" maxlength="120"><button type="button" class="btn sm primary" data-act="aiwrite" ${aiTextBusy?'disabled':''}>${aiTextBusy?'Bezig…':'Schrijf'}</button></div>`;
     if(aiOpts&&aiOpts.id===o.id) h+=`<div class="sec">Kies een versie</div>`+aiOpts.list.map((t,i)=>`<button type="button" class="btn aiopt" data-act="aiopt" data-v="${i}">${esc(t.slice(0,90))}</button>`).join('');
     h+=`<div class="sec">Tekststijl</div><div class="hs">${TSTYLES.map(([k,n])=>`<button type="button" class="fchip t" data-act="tstyle" data-v="${k}">${n}</button>`).join('')}</div>`;
     h+=`<div class="sec">Lettertype</div><div class="hs">${FONTS.map(f=>`<button type="button" class="fchip${o.font===f.n?' on':''}" style="font-family:'${famOf(f)}',sans-serif;font-weight:${f.w}" data-act="font" data-v="${f.n}">${f.n}</button>`).join('')}</div>`;
@@ -1675,9 +1824,10 @@ function pStyle(){
   else if(o.type!=='image'){
     h+=`<div class="sec">Kleur</div><div class="seg">${[['solid','Effen'],['grad','Verloop'],['none','Geen']].map(([k,n])=>`<button type="button" class="${o.fill.t===k?'on':''}" data-act="filltype" data-v="${k}">${n}</button>`).join('')}</div>`;
     if(o.fill.t!=='none') h+=colorF(o.fill.t==='grad'?'Kleur 1':'Kleur','fill.c1',o.fill.c1);
-    if(o.fill.t==='grad') h+=colorF('Kleur 2','fill.c2',o.fill.c2)+sl('Hoek','fill.a',-180,180,1,Math.round(o.fill.a),'deg');
+    if(o.fill.t==='grad') h+=colorF('Kleur 2','fill.c2',o.fill.c2)+sl('Hoek','fill.a',-180,180,1,Math.round(o.fill.a),'deg')+`<div class="hs" style="margin:6px -14px 0">${GRADS.map((g,i)=>`<button type="button" class="gpre" style="background:linear-gradient(135deg,${g[0]},${g[1]})" data-act="gpre" data-v="${i}" aria-label="Verloop ${i+1}"></button>`).join('')}</div>`;
     h+=`<div class="sec">Rand</div>`+sl('Dikte','sw',0,80,1,o.sw)+(o.sw>0?colorF('Randkleur','stroke',o.stroke):'');
   }
+  h+=nudgeHTML();
   h+=`<div class="sec">Uitlijnen op het doek</div><div class="seg">${[['l','Links'],['ch','Midden'],['r','Rechts']].map(([k,n])=>`<button type="button" data-act="align2" data-v="${k}">${n}</button>`).join('')}</div><div class="seg">${[['t','Boven'],['cv','Midden'],['b','Onder']].map(([k,n])=>`<button type="button" data-act="align2" data-v="${k}">${n}</button>`).join('')}</div>`;
   h+=`<div class="sec">Algemeen</div>`+sl('Dekking','opacity',0,1,.01,o.opacity,'pct')+sl('Draaien','rot',-180,180,1,Math.round(o.rot),'deg');
   h+=`<button type="button" class="tog${o.shadow?' on':''}" data-act="shadow">Schaduw</button><button type="button" class="tog${o.glow?' on':''}" data-act="glow">Gloed</button>`;
@@ -1701,6 +1851,7 @@ function pCanvas(){
   <div class="two" style="margin-top:8px"><label class="row" style="grid-template-columns:auto 1fr;"><span>Breedte</span><input class="inp" style="margin:0" type="number" inputmode="numeric" min="100" max="4000" value="${S.W}" data-cv="W"></label>
   <label class="row" style="grid-template-columns:auto 1fr;"><span>Hoogte</span><input class="inp" style="margin:0" type="number" inputmode="numeric" min="100" max="4000" value="${S.H}" data-cv="H"></label></div>
   <button type="button" class="tog${settings.rescale?' on':''}" data-act="rescale">Alles meeschalen bij een nieuw formaat</button>
+  <button type="button" class="btn" style="width:100%;margin-top:10px" data-act="ctry">${ico('dice',20)} Probeer willekeurige kleuren</button>
   <div class="sec">Kleurthema</div>
   <div class="pals">${allPals().map((p,i)=>`<div class="palw"><button type="button" class="pal" data-act="theme" data-v="${i}"><span class="sq"><i style="background:${p.bg}"></i><i style="background:${p.p1}"></i><i style="background:${p.p2}"></i><i style="background:${p.ac}"></i></span><em>${esc(p.n)}</em></button>${p.id?`<button type="button" class="pale" data-act="epal" data-v="${p.id}" aria-label="Palet bewerken">${ico('sliders',14)}</button>`:''}</div>`).join('')}</div>
   <div class="two" style="margin-top:8px"><button type="button" class="btn" data-act="rtheme">${ico('dice',20)} Willekeurig</button><button type="button" class="btn" data-act="newpal">${ico('plus',20)} Eigen palet</button></div>
@@ -1744,6 +1895,7 @@ function afterPanel(){
 
 sheet.addEventListener('input',e=>{
   const t=e.target;
+  if(t.id==='asearch'){addQ=t.value.trim().toLowerCase();const bd=$('#addbody');if(bd){bd.innerHTML=addBody();afterPanel();}return;}
   if(t.id==='txt'){const o=getSel();if(o){o.text=t.value;refreshText(o);render();}return;}
   if(t.dataset.dc!==undefined){recolorLive(t);return;}
   const k=t.dataset.k;if(!k) return;
@@ -1821,6 +1973,12 @@ sheet.addEventListener('click',e=>{
    case 'favadd': favAdd(v);break;
    case 'rescale': settings.rescale=!settings.rescale;saveSettings();buildPanel();break;
    case 'addEl': addElement(+v);break;
+   case 'insertmine': insertMine(v);break;
+   case 'nudge': nudgeSel(v);commit();render();break;
+   case 'nstep': nudgeBig=!nudgeBig;buildPanel();break;
+   case 'pipet': pipetKey=b.dataset.k;$('#stage').classList.add('picking');toast('Tik op het doek om een kleur te pakken.',3500);break;
+   case 'gpre': if(o){const g=GRADS[+v];o.fill.c1=g[0];o.fill.c2=g[1];o.fill.a=45;commit();buildPanel();render();}break;
+   case 'ctry': colorTry();break;
    case 'asub': addSub=v;buildPanel();break;
    case 'acat': addCat[addSub]=v;buildPanel();break;
    case 'addIcon': iconAdd(v);break;
@@ -1846,7 +2004,7 @@ sheet.addEventListener('click',e=>{
    case 'copystyle': if(o) copyStyle(o);break;
    case 'pastestyle': if(o&&styleClip){pasteStyle(o);commit();buildPanel();render();}break;
    case 'case': if(o&&o.type==='text'){const t=String(o.text);o.text=v==='up'?t.toUpperCase():v==='low'?t.toLowerCase():t.toLowerCase().replace(/(^|\s)(\S)/g,(m,a,b)=>a+b.toUpperCase());refreshText(o);commit();buildPanel();render();}break;
-   case 'aichip': if(o) aiWrite(o,WRITE_CHIPS[+v][1]);break;
+   case 'aichip': if(o) aiWrite(o,writeSet()[+v][1]);break;
    case 'aiwrite':{if(!o) break;const q=($('#aiq')?$('#aiq').value:'').trim();if(q.length<3){toast('Typ eerst kort wat de AI moet schrijven.');break;}aiWrite(o,q);break;}
    case 'align2': if(o){alignTo(o,v);commit();buildPanel();render();}break;
    case 'saveProj': saveProj();break;
@@ -1985,7 +2143,9 @@ function showTour(i){
 }
 ov.addEventListener('click',e=>{
   if(e.target===ov){hideOv();return;}
-  const b=e.target.closest('[data-ov],[data-ex],[data-tour],[data-size],[data-board],[data-fix],[data-pe],[data-pm],[data-hist],[data-fill],[data-coach]');if(!b) return;
+  const b=e.target.closest('[data-ov],[data-ex],[data-tour],[data-size],[data-board],[data-fix],[data-pe],[data-pm],[data-hist],[data-fill],[data-coach],[data-rn],[data-ct]');if(!b) return;
+  if(b.dataset.rn){const tt=myTpls.find(q=>q.id===b.dataset.rn),vv=($('#rnin')?$('#rnin').value:'').trim().slice(0,30);if(tt&&vv){tt.name=vv;saveKey(KEY_MYTPL,myTpls);}hideOv();refreshGrid();return;}
+  if(b.dataset.ct!==undefined){if(b.dataset.ct==='more'){colorTry();}else{const pp=ctPals[+b.dataset.ct];hideOv();if(pp) applyTheme(pp);}return;}
   if(b.dataset.fill){if(b.dataset.fill==='run') runFill();else if(b.dataset.fill==='undo'){undo();const fo=$('#fillout');if(fo) fo.innerHTML='<p class="hint">Teruggezet.</p>';}return;}
   if(b.dataset.coach){hideOv();openAsst();runAssistant('Verbeter dit ontwerp met deze tips: '+coachTips.join('; '));return;}
   if(b.dataset.size!==undefined){const s=SIZES[+b.dataset.size];hideOv();startBlank(s);return;}
@@ -2126,9 +2286,10 @@ const EVEN=new Set(['ring','tag','gear','target']);
 const fillRule=k=>EVEN.has(k)?'evenodd':'nonzero';
 const IC=(nm,x,y,s,col,ex={})=>mk('shape',{shape:'icon',icon:nm,x,y,w:s,h:s,p:2,fill:{c1:col},...ex});
 const LIBSH=[
- ['basic','Basis',['rect','round','ellipse','ring','triangle','diamond','pentagon','hexagon','octagon','trapezoid','parallelogram','chevron','plus','target']],
+ ['basic','Basis',['rect','round','ellipse','ring','triangle','righttri','diamond','kite','pentagon','hexagon','octagon','plus']],
  ['label','Etiketten',['ribbon','speech','tag','ticket','flag','scallop','burst','sparkle','shield','crown','blob','gear']],
- ['nature','Natuur',['leaf','drop','moon','cloud','sun','flame','mountain','wave','pine','heart','star','bolt','arrow']]];
+ ['nature','Natuur',['leaf','drop','moon','cloud','sun','flame','mountain','wave','pine','flower','bolt','heart']],
+ ['more','Meer',['arrow','chevron','xmark','star','target','semicircle','halfring','arch','quarter','trapezoid','parallelogram','heart']]];
 const STICK_CATS=[['food','Eten'],['sport','Sport'],['animals','Dieren'],['nature','Natuur'],['biz','Zakelijk'],['fun','Muziek en fun'],['sym','Symbolen']];
 const STICK={
  food:['🍕','🍔','🍟','🌭','🍿','🥐','🥖','🧀','🍩','🍪','🍰','🧁','🍦','🍓','🍎','🍋','🥑','🌶️','☕','🍵','🍺','🍷','🥂','🍹'],
@@ -2185,19 +2346,6 @@ function iconAdd(nm){
   const b=Math.min(S.W,S.H)*.3;
   add(mk('shape',{shape:'icon',icon:nm,x:S.W/2,y:S.H/2,w:b,h:b,p:2,fill:{c1:nextColor()}}));
 }
-function insertTemplate(i){
-  const t=TPL[i];
-  let objs=t.build().filter(o=>!(o.type==='shape'&&o.w>=t.W*.95&&o.h>=t.H*.95));
-  if(!objs.length) objs=t.build();
-  const bb=selBounds(objs),k=Math.min(1.6,S.W*.8/bb.w,S.H*.8/bb.h),g='g'+uid();
-  objs.forEach(o=>{
-    o.x=S.W/2+(o.x-bb.cx)*k;o.y=S.H/2+(o.y-bb.cy)*k;o.w*=k;o.h*=k;o.sw=(o.sw||0)*k;o.gid=g;
-    if(o.type==='text'){o.size=Math.max(6,o.size*k);o.ls=(o.ls||0)*k;refreshText(o);}
-  });
-  S.objs.push(...objs);setSelection(objs.map(o=>o.id));commit();updateQuick();render();buildPanel();
-  toast('Sjabloon toegevoegd als groep. Sleep om te verplaatsen.');
-}
-
 /* nieuwe sjablonen */
 const mkInvoice=(title,color)=>{
   const o=[R('rect',620,60,1240,120,color),TL(title,'Montserrat',64,90,32,'#ffffff',{ls:6}),
@@ -2281,20 +2429,20 @@ const ICON_POOL={sport:['trophy','bolt','dumbbell','ball','bike','flame','rocket
  nature:['leaf','tree','sun','drop','mountain','paw','flower'],luxury:['crown','star','key','wine','bag','diamond'],emblem:['star','crown','anchor','trophy','mountain','tree'],wordmark:[]};
 function genLogo(name,slogan,style,pal,v=0,icon){
   const {bg,p1,p2,ac}=pal,tx=on(bg),on1=on(p1),up=name.toUpperCase(),sl=(slogan||'').trim(),out=[];
-  const pool=ICON_POOL[style]||[],icn=(icon&&ICONLIB[icon])?icon:(pool.length?pool[v%pool.length]:'star');
+  const pool=ICON_POOL[style]||[],hs=[...name].reduce((a,c)=>a+c.charCodeAt(0),0),icn=(icon&&ICONLIB[icon])?icon:(pool.length?pool[(v+hs)%pool.length]:'star');
   const fitTo=(o,tw)=>{for(let i=0;i<3;i++){refreshText(o);if(o.w>0) o.size=clamp(o.size*tw/o.w,14,420);}refreshText(o);return o;};
   const slg=(font,size,y,color,tw,extra={})=>fitTo(T(sl,font,size,500,y,color,extra),tw);
   switch(style){
    case 'sport':{
-    const f=['Bungee','Anton','Oswald'][v%3];
+    const f=['Bungee','Anton','Oswald','Staatliches','Archivo Black'][v%5];
     out.push(R('shield',500,490,760,860,p1,{stroke:p2,sw:24}),R('shield',500,490,640,740,{t:'none'},{stroke:ac,sw:6}),IC(icn,500,290,170,ac,{p:2}));
     out.push(fitTo(T(up,f,120,500,500,on1),520));
     if(sl) out.push(slg('Oswald',50,640,ac,440,{ls:10}));
     break;}
    case 'elegant':{
-    const f=['Playfair Display','Cinzel'][v%2];
+    const f=['Playfair Display','Cinzel','Yeseva One','Cormorant Garamond'][v%4],caps=f==='Cinzel'||f==='Cormorant Garamond';
     out.push(R('ring',500,500,880,880,p1,{p:.014}),R('ring',500,500,820,820,p1,{p:.006}),IC(icn,500,300,56,ac,{p:2}));
-    out.push(fitTo(T(f==='Cinzel'?up:name,f,120,500,490,tx,{ls:f==='Cinzel'?8:2}),560));
+    out.push(fitTo(T(caps?up:name,f,120,500,490,tx,{ls:caps?8:2}),560));
     out.push(R('rect',500,570,260,4,ac));
     if(sl) out.push(slg('Lora',44,650,vis(bg,p2,tx),420,{ls:8}));
     break;}
@@ -2304,19 +2452,24 @@ function genLogo(name,slogan,style,pal,v=0,icon){
     if(sl) out.push(slg('Bebas Neue',56,935,vis(bg,ac,tx),500,{ls:16}));
     break;}
    case 'retro':{
-    const f=['Lobster','Pacifico'][v%2];
+    const f=['Lobster','Pacifico','Righteous','Abril Fatface'][v%4];
     out.push(R('burst',500,470,860,860,p2,{p:18}),R('ellipse',500,470,640,640,p1,{stroke:ac,sw:14}),IC(icn,500,290,120,on1,{p:2.2}));
     out.push(fitTo(T(name,f,200,500,sl?470:490,on1),500));
     if(sl){out.push(R('ribbon',500,650,600,170,ac));out.push(slg('Montserrat',44,650,on(ac),400,{ls:6}));}
     break;}
    case 'minimal':{
+    if(v%2===1){
+     out.push(IC(icn,255,480,220,vis(bg,p1,tx),{p:1.6}),fitTo(T(up,'Montserrat',110,650,470,tx,{ls:4}),520),R('rect',650,sl?545:540,120,8,vis(bg,p1,tx)));
+     if(sl) out.push(fitTo(T(sl,'DM Sans',36,650,610,vis(bg,p2,tx),{ls:10}),420));
+     break;
+    }
     out.push(IC(icn,500,330,200,vis(bg,p1,tx),{p:1.6}));
     out.push(fitTo(T(up,'Montserrat',120,500,560,tx,{ls:6}),700));
     if(sl) out.push(slg('DM Sans',42,650,vis(bg,p2,tx),500,{ls:14}));
     out.push(R('rect',500,sl?730:650,120,8,vis(bg,p1,tx)));
     break;}
    case 'playful':{
-    const f=['Bungee','Permanent Marker'][v%2];
+    const f=['Bungee','Permanent Marker','Fredoka','Righteous'][v%4];
     out.push(R('burst',500,500,820,820,ac,{p:12}),R('sparkle',200,230,130,130,p2),R('sparkle',810,770,110,110,p2),IC(icn,790,240,130,p1,{p:2.4,rot:12}));
     out.push(fitTo(T(name,f,170,500,sl?470:500,p1,{rot:-6,sw:9,stroke:'#ffffff'}),620));
     if(sl) out.push(slg('Poppins',56,650,on(ac),480,{rot:-6}));
@@ -2334,8 +2487,8 @@ function genLogo(name,slogan,style,pal,v=0,icon){
     out.push(R('star',155,500,56,56,ac),R('star',845,500,56,56,ac),IC(icn,500,500,300,c1,{p:1.6}));
     break;}
    case 'wordmark':{
-    const f=['Montserrat','Playfair Display','Bebas Neue','Poppins'][v%4],col=vis(bg,p1,tx);
-    out.push(fitTo(T(f==='Playfair Display'?name:up,f,220,500,470,col,{ls:f==='Bebas Neue'?10:0}),820));
+    const f=['Montserrat','Playfair Display','Bebas Neue','Poppins','Abril Fatface','Righteous','Staatliches','Archivo Black'][v%8],col=vis(bg,p1,tx);
+    out.push(fitTo(T(['Playfair Display','Abril Fatface'].includes(f)?name:up,f,220,500,470,col,{ls:['Bebas Neue','Staatliches'].includes(f)?10:0}),820));
     out.push(R('rect',500,sl?600:590,160,14,ac));
     if(sl) out.push(slg('DM Sans',44,690,vis(bg,p2,tx),560,{ls:12}));
     break;}
@@ -2417,6 +2570,7 @@ $('#home').addEventListener('click',e=>{
   else if(a==='cat'){homeCat=v;refreshGrid();}
   else if(a==='fav'){const t=TPL[+v];toggleFav(t.name);b.classList.toggle('on',favT.includes(t.name));if(homeCat==='fav') refreshGrid();}
   else if(a==='mytpl'){const t=myTpls.find(q=>q.id===b.dataset.id);if(t){try{S.pid=null;loadData(JSON.parse(t.data));S.name=t.name+' kopie';setTitle();showEditor();toast('Sjabloon geopend als kopie');}catch(err){toast('Dit sjabloon kon niet worden geopend.');}}}
+  else if(a==='mytplren'){renameTpl(b.dataset.id);}
   else if(a==='mytpldel'){const t=myTpls.find(q=>q.id===b.dataset.id);if(t) ask('Dit sjabloon verwijderen?',()=>{myTpls=myTpls.filter(q=>q.id!==t.id);saveKey(KEY_MYTPL,myTpls);refreshGrid();},'Verwijder');}
   else if(a==='tpl'){const t=TPL[+v];noteRecent(t.name);openDoc({W:t.W,H:t.H,bg:t.bg,name:t.name,objs:t.build()});}
   else if(a==='ai') openAI();
@@ -2436,9 +2590,6 @@ const NAMES=['Nova','Blaze','Luna Café','Atlas','Wolf Pack','Sunny Days','Studi
 function openWizard(pre){
   wz={step:1,name:'',slogan:'',style:'sport',pal:0,v:0,ideas:[],desc:'',busy:false,...(pre||{})};
   $('#wiz').hidden=false;renderWiz();$('#wiz').scrollTop=0;
-}
-function surprise(){
-  openWizard({step:4,name:NAMES[Math.random()*NAMES.length|0],style:STYLES[Math.random()*STYLES.length|0][0],pal:Math.random()*PALS.length|0,v:Math.random()*6|0});
 }
 async function renderWiz(){
   const w=wz,el=$('#wiz');
@@ -2526,10 +2677,6 @@ function randomTheme(){
   const h=Math.random()*360,dark=Math.random()<.4;
   return {n:'Willekeurig',bg:dark?hslHex(h,30,10):hslHex(h,25,97),p1:hslHex(h,72,dark?62:36),p2:hslHex((h+40)%360,66,55),ac:hslHex((h+180)%360,88,58)};
 }
-const BIZ=['bakkerij','voetbalclub','gamekanaal','yogastudio','foodtruck','fietsenmaker','kattencafé','ijssalon','skatewinkel','muziekschool','tuincentrum','barbershop','pizzeria','dansschool'];
-const TWIST=['met een vleugje ruimtevaart','in retro-stijl','met een dier als mascotte','in maar twee kleuren','vrolijk en kleurrijk','stoer en donker','minimalistisch en chic','geïnspireerd op de zee'];
-const newBrief=()=>{const p=a=>a[Math.random()*a.length|0];return `Een logo voor een ${p(BIZ)} ${p(TWIST)}`;};
-let brief=newBrief();
 
 /* ---------- instellingen en zijmenu ---------- */
 function loadSettings(){
@@ -2649,11 +2796,6 @@ function guessName(p){
   if(q) return q[1];
   return NAMES[(Math.random()*NAMES.length)|0];
 }
-function localConcepts(p){
-  const hits=KW.filter(k=>k[1].test(p)).map(k=>k[0]);
-  const pool=[...new Set([...hits,'minimal','playful','elegant','sport'])].slice(0,3),name=guessName(p);
-  return pool.map((s,i)=>({name,slogan:'',style:s,pal:palFor(p,i),why:'Slimme keuze op basis van je woorden.',v:i}));
-}
 function normConcept(c){
   if(!c||typeof c!=='object') return null;
   const style=STYLES.some(s=>s[0]===c.style)?c.style:'minimal',pl=c.palette||{},base=PALS[(Math.random()*PALS.length)|0];
@@ -2672,18 +2814,30 @@ function normFree(d){
   });
   return {name:String(d.name||'').trim().slice(0,24),bg:cleanHex(d.bg,'#ffffff'),objs};
 }
+const ART_DIRS=[['Bauhaus','Bauhaus met eenvoudige geometrische vormen en sterke primaire kleuren'],['Japans minimalisme','Japans minimalisme met veel witruimte en één rustig detail'],['Art deco','Art deco met symmetrie, fijne lijnen en goud'],['Memphis','Memphis-stijl met speelse vormen en felle kleuren'],['Jaren 70','retro jaren 70 met warme aardetinten en ronde vormen'],['Scandinavisch','Scandinavisch: rustig, zacht en functioneel'],['Streetwear','streetwear met stoere dikke letters en een rauw randje'],['Ambachtelijk','handgemaakt en ambachtelijk, als een stempel of etiket'],['Futuristisch','futuristisch en techy met scherpe vormen en gloed'],['Vintage badge','vintage badge of embleem met ringen en gebogen tekst'],['Zwitsers','Zwitsers grafisch ontwerp: strak, uitgelijnd en typografisch'],['Organisch','organisch en zacht met vloeiende vormen'],['Pop-art','pop-art met felle kleuren en dikke contouren'],['Monogram','luxe monogram met sierlijke letters'],['Mascotte','speels en vriendelijk met een icoon als mascotte'],['Brutalisme','gedurfd en brutalistisch: zwaar, eenvoudig en groot']];
+const COMPS=['gecentreerd en gestapeld','icoon links en naam rechts','de naam in een badge of lint','een icoon in een cirkel met de naam eronder','alleen letters met één opvallend detail','asymmetrisch met een schuine balk','gebogen tekst rond een icoon','de naam in een kader met een icoon erboven'];
+const AI_VIBES=['Speels','Strak','Luxe','Stoer','Natuurlijk','Retro','Futuristisch','Warm','Rustig','Gedurfd'];
+const AI_COLS=[['auto','Kleuren: AI kiest',''],['warm','Warm','warme kleuren (rood, oranje, geel)'],['cool','Koel','koele kleuren (blauw, groen, paars)'],['pastel','Pastel','zachte pastelkleuren'],['neon','Neon','felle neonkleuren op een donkere achtergrond'],['mono','Zwart-wit','vrijwel zwart-wit met één accentkleur'],['earth','Aarde','aardetinten (bruin, groen, terracotta)']];
 const KIND_TXT={auto:'Kies zelf de beste soort logo.',emblem:'Het logo moet een embleem zijn: een ronde badge of schild met tekst en een icoon.',icon:'Het logo bestaat uit een duidelijk icoon met de merknaam ernaast of eronder.',word:'Het logo is een woordmerk: alleen de naam, in een krachtig lettertype.'};
 const AI_KINDS=[['auto','Automatisch'],['emblem','Embleem'],['icon','Icoon en naam'],['word','Alleen tekst']];
-const promptConcepts=(p,kind)=>`Je bent een ervaren logo-ontwerper. Bedenk 4 verschillende logo-concepten voor deze beschrijving:
+const seedStr=()=>Math.random().toString(36).slice(2,8);
+const promptConcepts=(p,c)=>{
+  const col=(AI_COLS.find(x=>x[0]===c.col)||[])[2];
+  return `Je bent een ervaren, eigenzinnige logo-ontwerper. Bedenk ${c.dirs.length} verschillende logo-concepten voor deze beschrijving:
 "${p.replace(/"/g,"'")}"
-${KIND_TXT[kind]||''}
-
+${KIND_TXT[c.kind]||''}${c.vibe.length?'\nGewenste sfeer: '+c.vibe.join(', ')+'.':''}${col?'\nKleurrichting: '+col+'.':''}
+Elk concept volgt een eigen kunstrichting:
+${c.dirs.map((d,i)=>`Concept ${i+1}: ${d[1]}`).join('\n')}
+${c.like?`Maak variaties op dit bestaande concept. Verander het icoon, de kleuren en de stijl duidelijk, maar houd de merknaam: ${JSON.stringify(c.like)}\n`:''}
 Geef ALLEEN JSON terug in dit formaat:
 {"concepts":[{"name":"merknaam (max 22 tekens)","slogan":"korte slogan of lege tekst (max 30 tekens)","style":"een van: ${STYLES.map(s=>s[0]).join(', ')}","icon":"een van: ${Object.keys(ICONLIB).join(', ')}","palette":{"bg":"#rrggbb","p1":"#rrggbb","p2":"#rrggbb","ac":"#rrggbb"},"why":"een zin in het Nederlands waarom dit past (max 90 tekens)"}]}
 
 Betekenis van de stijlen: sport = stoer schild, elegant = fijne ringen en sierlijke letters, gamer = zeshoek met gloed, retro = burst met lint, minimal = strak en rustig, playful = kleurrijk en speels, nature = blad en ring, luxury = kroon en goud, emblem = ronde badge met gebogen tekst, wordmark = alleen de naam.
-Regels: 4 concepten met verschillende stijl, icoon en kleuren. Gebruik de merknaam uit de beschrijving als die er is, anders verzin je een korte pakkende naam. Kies het icoon dat het best bij het merk past. bg is de achtergrond (wit of heel licht, of donker bij gamer en luxury). p1 is de hoofdkleur, p2 de tweede kleur en ac een accentkleur. Zorg voor goed contrast tussen bg en p1. Alle kleuren zijn 6-cijferige hex-codes.`;
-const promptFree=(p,extra)=>`Ontwerp één logo op een vierkant canvas van 1000 bij 1000 pixels voor: "${p.replace(/"/g,"'")}".${extra?' '+extra:''}
+Regels: de concepten verschillen duidelijk in stijl, icoon en kleuren en lijken niet op elkaar. Gebruik de merknaam uit de beschrijving als die er is, anders verzin je een korte pakkende naam die bij elk concept iets anders kan zijn. Kies bij elk concept het icoon dat het best past en vermijd steeds dezelfde iconen. bg is de achtergrond. p1 is de hoofdkleur, p2 de tweede kleur en ac een accentkleur. Zorg voor goed contrast tussen bg en p1. Alle kleuren zijn 6-cijferige hex-codes en de paletten zijn onderling verschillend.
+Willekeurig zaadje (gebruik het voor verrassende keuzes, noem het niet): ${seedStr()}`;
+};
+const promptFree=(p,extra,dir,comp)=>`Ontwerp één logo op een vierkant canvas van 1000 bij 1000 pixels voor: "${p.replace(/"/g,"'")}".${extra?' '+extra:''}
+Kunstrichting: ${dir[1]}. Compositie: ${comp}.
 Geef ALLEEN JSON terug: {"name":"merknaam","bg":"#rrggbb","objects":[...]}.
 
 Je mag alleen deze onderdelen gebruiken.
@@ -2691,35 +2845,39 @@ Vorm: {"type":"shape","shape":"<een van: ${SHAPES.map(s=>s[0]).join(', ')}>","x"
 Icoon (lijnicoon): {"type":"shape","shape":"icon","icon":"<een van: ${Object.keys(ICONLIB).join(', ')}>","x":500,"y":400,"w":260,"h":260,"p":2,"fill":{"t":"solid","c1":"#rrggbb"}}. De kleur van een icoon is fill.c1, p is de lijndikte (1 tot 3).
 Tekst: {"type":"text","text":"NAAM","font":"<een van: ${FONTS.map(f=>f.n).join(', ')}>","size":140,"x":500,"y":700,"ls":0,"curve":0,"fill":{"t":"solid","c1":"#rrggbb"},"stroke":"#rrggbb","sw":0}.
 
-x en y zijn het midden van het onderdeel. Onderdelen verderop in de lijst liggen bovenop. Maximaal 14 onderdelen en alles binnen 60 tot 940. Tekst moet goed leesbaar zijn (sterk contrast) en past binnen 800 pixels breed. Combineer een sterke vorm met een icoon en de naam tot een herkenbaar geheel (bijvoorbeeld een schild met een icoon en een lint met de naam, of een ring met gebogen tekst en een icoon in het midden). Gebruik "curve" (-100 tot 100) voor gebogen tekst, handig in badges. Beperk je tot 2 lettertypes en 3 tot 4 kleuren. Wees creatief maar netjes.`;
+x en y zijn het midden van het onderdeel. Onderdelen verderop in de lijst liggen bovenop. Maximaal 14 onderdelen en alles binnen 60 tot 940. Tekst moet goed leesbaar zijn (sterk contrast) en past binnen 800 pixels breed. Combineer een sterke vorm met een icoon en de naam tot een herkenbaar geheel. Gebruik "curve" (-100 tot 100) voor gebogen tekst. Beperk je tot 2 lettertypes en 3 tot 4 kleuren. Wees creatief maar netjes, en kies een originele oplossing in plaats van de meest voor de hand liggende. Zaadje: ${seedStr()}`;
 
-let ai={prompt:'',kind:'auto',busyC:false,busyF:false,concepts:[],frees:[],err:'',ctl:null,local:false};
+let ai={prompt:'',kind:'auto',vibe:[],col:'auto',busyC:false,busyF:false,concepts:[],frees:[],err:'',ctl:null,local:false};
 const AI_EX=['Vegan pizzeria in Rotterdam, speels en groen','Voetbalclub voor kinderen, stoer en blauw','Gamekanaal met neon en ruimtethema','Luxe juwelier, goud en zwart'];
 function openAI(pre,run){
   if(ai.ctl){try{ai.ctl.abort();}catch(e){}}
-  ai={prompt:pre||ai.prompt||'',kind:ai.kind||'auto',busyC:false,busyF:false,concepts:[],frees:[],err:'',ctl:null,local:false};
+  ai={prompt:pre||ai.prompt||'',kind:ai.kind||'auto',vibe:ai.vibe||[],col:ai.col||'auto',busyC:false,busyF:false,concepts:[],frees:[],err:'',ctl:null,local:false};
   $('#ai').hidden=false;renderAI();$('#ai').scrollTop=0;
   if(run) runAI();
 }
 function renderAI(){
-  const a=ai,busy=a.busyC||a.busyF,el=$('#ai');
+  const a=ai,busy=a.busyC||a.busyF,el=$('#ai'),can=aiAvail()&&!a.local;
   const skel=n=>Array.from({length:n},()=>'<div class="concept"><div class="skel"></div><div class="skl"></div><div class="skl s"></div></div>').join('');
-  const cards=a.concepts.map((c,i)=>`<div class="concept"><canvas data-cc="${i}" width="440" height="440"></canvas><b>${esc(c.name)}</b><small>${esc(c.why||'')}</small><div class="two"><button type="button" class="btn sm" data-a="var" data-i="${i}">Variant</button><button type="button" class="btn sm primary" data-a="pick" data-i="${i}">Kies</button></div></div>`).join('');
-  const frees=a.frees.map((f,i)=>`<div class="concept"><canvas data-cc="f${i}" width="440" height="440"></canvas><b>Vrij ontwerp ${i+1}</b><small>De AI tekende dit zelf${f.name?': '+esc(f.name):''}</small><button type="button" class="btn sm primary" data-a="pickfree" data-i="${i}">Kies</button></div>`).join('');
+  const cards=a.concepts.map((c,i)=>`<div class="concept"><canvas data-cc="${i}" width="440" height="440"></canvas><b>${esc(c.name)}</b><small>${c.dir?'<i class="dirtag">'+esc(c.dir)+'</i> ':''}${esc(c.why||'')}</small><div class="two"><button type="button" class="btn sm" data-a="var" data-i="${i}">${ico('dice',16)} Variant</button><button type="button" class="btn sm primary" data-a="pick" data-i="${i}">Kies</button></div>${can?`<button type="button" class="link" data-a="like" data-i="${i}">Meer zoals dit</button>`:''}</div>`).join('');
+  const frees=a.frees.map((f,i)=>`<div class="concept"><canvas data-cc="f${i}" width="440" height="440"></canvas><b>Vrij ontwerp ${i+1}</b><small>${f.dir?'<i class="dirtag">'+esc(f.dir)+'</i> ':''}De AI tekende dit zelf${f.name?': '+esc(f.name):''}</small><button type="button" class="btn sm primary" data-a="pickfree" data-i="${i}">Kies</button></div>`).join('');
   el.innerHTML=`<div class="wrap">
    <div class="whead"><button class="ib" type="button" data-a="close" aria-label="Sluiten">${ico('back')}</button><div class="aititle">${ico('ai',18)} AI-ontwerper</div><span style="width:40px"></span></div>
    <h2 class="ah">Beschrijf je merk, de AI ontwerpt</h2>
-   <p class="hint">Vertel in gewone woorden wat je maakt en welke sfeer je wilt. Je krijgt meteen logo’s om uit te kiezen. In de editor kun je daarna met de AI-assistent verder verfijnen.</p>
+   <p class="hint">Vertel in gewone woorden wat je maakt. Elke keer krijg je andere richtingen en kleuren. Geen idee? Tik op de dobbelsteen.</p>
    <textarea id="aip" rows="3" maxlength="240" placeholder="Bijvoorbeeld: een gezellige vegan pizzeria in Rotterdam, groen en speels">${esc(a.prompt)}</textarea>
-   <div class="hs" style="margin-bottom:8px">${AI_EX.map((t,i)=>`<button type="button" class="fchip t" data-a="ex" data-i="${i}">${esc(t)}</button>`).join('')}</div>
+   <div class="hs" style="margin-bottom:8px"><button type="button" class="fchip t" data-a="dice">${ico('dice',16)} Verras me</button>${AI_EX.map((t,i)=>`<button type="button" class="fchip t" data-a="ex" data-i="${i}">${esc(t)}</button>`).join('')}</div>
    <div class="sec" style="margin-top:6px">Soort logo</div>
-   <div class="hs" style="margin-bottom:12px">${AI_KINDS.map(([k,n])=>`<button type="button" class="fchip t${a.kind===k?' on':''}" data-a="kind" data-v="${k}">${n}</button>`).join('')}</div>
+   <div class="hs" style="margin-bottom:8px">${AI_KINDS.map(([k,n])=>`<button type="button" class="fchip t${a.kind===k?' on':''}" data-a="kind" data-v="${k}">${n}</button>`).join('')}</div>
+   <div class="sec" style="margin-top:6px">Sfeer (kies er een paar)</div>
+   <div class="hs" style="margin-bottom:8px">${AI_VIBES.map(v=>`<button type="button" class="fchip t${a.vibe.includes(v)?' on':''}" data-a="vibe" data-v="${v}">${v}</button>`).join('')}</div>
+   <div class="sec" style="margin-top:6px">Kleuren</div>
+   <div class="hs" style="margin-bottom:12px">${AI_COLS.map(([k,n])=>`<button type="button" class="fchip t${a.col===k?' on':''}" data-a="col" data-v="${k}">${n}</button>`).join('')}</div>
    ${busy?`<button type="button" class="btn big" data-a="stop">Stoppen</button>`:`<button type="button" class="btn primary big" data-a="run">${ico('ai',20)} ${a.concepts.length?'Nieuwe logo’s maken':'Maak logo’s met AI'}</button>`}
    ${a.err?`<p class="hint" style="color:var(--danger)">${esc(a.err)}</p>`:''}
-   ${a.local?`<p class="hint">AI is hier niet beschikbaar. Daarom gebruikte ik de slimme sjablonen-modus.</p>`:''}
+   ${a.local?`<p class="hint">AI is hier niet beschikbaar. Daarom gebruikte ik de slimme sjablonen-modus. Die kiest elke keer andere stijlen en iconen.</p>`:''}
    ${busy&&!a.concepts.length?`<p class="hint">De AI is aan het ontwerpen…</p><div class="cgrid">${skel(4)}</div>`:''}
    <div class="cgrid">${cards}${frees}${a.busyF&&a.concepts.length?skel(1):''}</div>
-   ${a.frees.length&&!a.busyF&&aiAvail()&&!a.local?`<button type="button" class="btn" style="width:100%;margin-top:12px" data-a="morefree">${ico('dice',20)} Nog een vrij ontwerp</button>`:''}
+   ${a.concepts.length&&!busy?`<div class="two" style="margin-top:12px"><button type="button" class="btn" data-a="moreconc">${ico('dice',18)} Nog 4 andere</button>${can?`<button type="button" class="btn" data-a="morefree">${ico('dice',18)} Nog een vrij ontwerp</button>`:'<span></span>'}</div>`:''}
   </div>`;
   paintAI();
 }
@@ -2731,31 +2889,46 @@ function paintAI(){
     else{const cc=ai.concepts[+k];if(cc){const r=genLogo(cc.name,cc.slogan,conceptStyle(cc),cc.pal,cc.v||0,cc.icon);paintPreview(c,r.objs,r.bg);}}
   });
 }
+async function fetchConcepts(s,ctl,n,like){
+  const dirs=sampleN(ART_DIRS,n);
+  const d=await s.json(promptConcepts(ai.prompt.trim(),{kind:ai.kind,vibe:ai.vibe,col:ai.col,dirs,like}),{signal:ctl.signal,modelTier:'quick'});
+  const list=(d&&Array.isArray(d.concepts)?d.concepts:[]).slice(0,n).map(normConcept).filter(Boolean);
+  if(!list.length) throw {code:'invalid_json'};
+  list.forEach((c,i)=>{c.dir=dirs[i]?dirs[i][0]:'';c.v=Math.random()*8|0;});
+  return list;
+}
 async function runAI(){
   const p=ai.prompt.trim();
-  if(p.length<3){toast('Beschrijf eerst kort je merk.');return;}
+  if(p.length<3){toast('Beschrijf eerst kort je merk of tik op Verras me.');return;}
   await fontsWait();
   ai.concepts=[];ai.frees=[];ai.err='';ai.local=false;
   const s=await getSample();
   if(!s){ai.local=true;ai.concepts=localConcepts(p);renderAI();return;}
   const ctl=new AbortController();ai.ctl=ctl;ai.busyC=true;ai.busyF=true;renderAI();
   const live=()=>ai.ctl===ctl;
-  s.json(promptConcepts(p,ai.kind),{signal:ctl.signal,modelTier:'quick'}).then(d=>{
-    const list=(d&&Array.isArray(d.concepts)?d.concepts:[]).slice(0,4).map(normConcept).filter(Boolean);
-    if(!list.length) throw {code:'invalid_json'};
-    if(live()) ai.concepts=list;
-  }).catch(e=>{
-    if(live()&&(!e||e.code!=='cancelled')){ai.err=aiMsg(e);ai.concepts=localConcepts(p);ai.local=false;}
+  fetchConcepts(s,ctl,4).then(l=>{if(live()) ai.concepts=l;}).catch(e=>{
+    if(live()&&(!e||e.code!=='cancelled')){ai.err=aiMsg(e);ai.concepts=localConcepts(p);}
   }).finally(()=>{if(live()){ai.busyC=false;renderAI();}});
-  s.json(promptFree(p),{signal:ctl.signal}).then(d=>{const f=normFree(d);if(live()&&f) ai.frees.push(f);})
+  const dir=pickR(ART_DIRS);
+  s.json(promptFree(p,'',dir,pickR(COMPS)),{signal:ctl.signal}).then(d=>{const f=normFree(d);if(live()&&f){f.dir=dir[0];ai.frees.push(f);}})
   .catch(()=>{}).finally(()=>{if(live()){ai.busyF=false;renderAI();}});
+}
+async function moreConcepts(like){
+  const p=ai.prompt.trim();
+  await fontsWait();
+  const s=await getSample();
+  if(!s){ai.concepts.push(...localConcepts(p));ai.concepts=ai.concepts.slice(-12);renderAI();return;}
+  const ctl=new AbortController();ai.ctl=ctl;ai.busyC=true;renderAI();
+  const live=()=>ai.ctl===ctl;
+  fetchConcepts(s,ctl,like?3:4,like).then(l=>{if(live()) ai.concepts=[...ai.concepts,...l].slice(-12);})
+  .catch(e=>{if(live()&&e&&e.code!=='cancelled') ai.err=aiMsg(e);}).finally(()=>{if(live()){ai.busyC=false;renderAI();}});
 }
 async function moreFree(){
   const p=ai.prompt.trim(),s=await getSample();if(!s||ai.busyF) return;
   await fontsWait();
   const ctl=new AbortController();ai.ctl=ctl;ai.busyF=true;renderAI();
-  const live=()=>ai.ctl===ctl;
-  s.json(promptFree(p,'Kies een andere aanpak dan een standaard schild: variatie is de bedoeling (variatie '+(ai.frees.length+1)+').'),{signal:ctl.signal,cache:false}).then(d=>{const f=normFree(d);if(live()&&f) ai.frees.push(f);})
+  const live=()=>ai.ctl===ctl,dir=pickR(ART_DIRS);
+  s.json(promptFree(p,'Kies een andere aanpak dan eerdere ontwerpen: variatie is de bedoeling.',dir,pickR(COMPS)),{signal:ctl.signal}).then(d=>{const f=normFree(d);if(live()&&f){f.dir=dir[0];ai.frees.push(f);}})
   .catch(e=>{if(live()&&e&&e.code!=='cancelled') ai.err=aiMsg(e);}).finally(()=>{if(live()){ai.busyF=false;renderAI();}});
 }
 function pickConcept(i){
@@ -2773,11 +2946,16 @@ $('#ai').addEventListener('click',e=>{
   const a=b.dataset.a,i=+b.dataset.i;
   if(a==='close'){if(ai.ctl){try{ai.ctl.abort();}catch(x){}ai.ctl=null;}$('#ai').hidden=true;}
   else if(a==='ex'){ai.prompt=AI_EX[i];renderAI();}
+  else if(a==='dice'){ai.prompt=newBrief().replace(/^Een logo voor /,'Een logo voor ');ai.vibe=sampleN(AI_VIBES,2);ai.col=pickR(AI_COLS)[0];renderAI();}
   else if(a==='kind'){ai.kind=b.dataset.v;renderAI();}
+  else if(a==='vibe'){const v=b.dataset.v;ai.vibe=ai.vibe.includes(v)?ai.vibe.filter(x=>x!==v):[...ai.vibe,v].slice(-3);renderAI();}
+  else if(a==='col'){ai.col=b.dataset.v;renderAI();}
   else if(a==='run') runAI();
+  else if(a==='moreconc') moreConcepts();
+  else if(a==='like'){const c=ai.concepts[i];if(c) moreConcepts({name:c.name,slogan:c.slogan,style:c.style,icon:c.icon,palette:c.pal});}
   else if(a==='morefree') moreFree();
   else if(a==='stop'){if(ai.ctl){try{ai.ctl.abort();}catch(x){}}ai.ctl=null;ai.busyC=ai.busyF=false;renderAI();}
-  else if(a==='var'){const c=ai.concepts[i];if(c){c.v=(c.v||0)+1;const cv2=$(`canvas[data-cc="${i}"]`,$('#ai'));if(cv2){const r=genLogo(c.name,c.slogan,conceptStyle(c),c.pal,c.v,c.icon);paintPreview(cv2,r.objs,r.bg);}}}
+  else if(a==='var'){const c=ai.concepts[i];if(c){c.v=(c.v||0)+1;const pl=ICON_POOL[c.style]||[];if(pl.length&&!c.iconLocked) c.icon=pickR(pl);const cv2=$(`canvas[data-cc="${i}"]`,$('#ai'));if(cv2){const r=genLogo(c.name,c.slogan,conceptStyle(c),c.pal,c.v,c.icon);paintPreview(cv2,r.objs,r.bg);}}}
   else if(a==='pick') pickConcept(i);
   else if(a==='pickfree') pickFree(i);
 });
@@ -2798,7 +2976,7 @@ async function aiWrite(o,instr){
     if(!list.length) throw {code:'invalid_json'};
     aiOpts={id:o.id,list};
   }catch(e){if(!e||e.code!=='cancelled') toast(aiMsg(e),3400);}
-  aiTextBusy=false;buildPanel();
+  aiTextBusy=false;_ws=null;buildPanel();
 }
 
 /* AI: alle teksten van een ontwerp invullen */
@@ -2906,7 +3084,7 @@ function renderAsst(){
   const msgs=asst.msgs.slice(-5).map(m=>`<div class="am ${m.r}${m.err?' err':''}">${esc(m.t)}</div>`).join('');
   d.innerHTML=`<div class="ahead"><b>${ico('ai',16)} AI-assistent</b><span>${last&&last.r==='a'&&last.n?`<button type="button" class="link" data-as="undo">Ongedaan maken</button>`:''}<button class="ib sm" type="button" data-as="close" aria-label="Sluiten">${ico('close',18)}</button></span></div>
   <div class="amsgs" id="amsgs">${msgs||'<div class="am a">Zeg wat je wilt veranderen, bijvoorbeeld “maak de naam groter en zet een ster erboven”.</div>'}${asst.busy?'<div class="am a"><span class="dotsl"></span> Bezig met aanpassen…</div>':''}</div>
-  <div class="hs" style="margin:2px 0 6px">${ASST_CHIPS.map((t,i)=>`<button type="button" class="fchip t" data-as="chip" data-i="${i}">${esc(t)}</button>`).join('')}</div>
+  <div class="hs" style="margin:2px 0 6px">${asstChips().map((c,i)=>`<button type="button" class="fchip t" data-as="chip" data-i="${i}">${esc(c.t)}</button>`).join('')}</div>
   <div class="arow"><input id="asin" class="inp" placeholder="Wat moet de AI aanpassen?" maxlength="240" value="${esc(asst.input)}" autocomplete="off">${asst.busy?'<button type="button" class="btn sm" data-as="stop">Stop</button>':'<button type="button" class="btn primary sm" data-as="send">Stuur</button>'}</div>`;
   const m=$('#amsgs');if(m) m.scrollTop=m.scrollHeight;
 }
@@ -2938,7 +3116,7 @@ Toegestane ops:
 {"op":"delete","id":"L4"}
 {"op":"bg","color":"#rrggbb"}
 {"op":"canvas","w":1080,"h":1080}
-Regels: x en y zijn het midden van een laag. Houd alles binnen het canvas en tekst binnen 90% van de breedte. Zorg voor goed contrast tussen tekst en achtergrond. Verander alleen wat nodig is voor de opdracht en behoud de rest. Bij kleuren: gebruik 6-cijferige hex-codes en laat kleuren goed samengaan. Maximaal 30 ops.`;
+Regels: x en y zijn het midden van een laag. Houd alles binnen het canvas en tekst binnen 90% van de breedte. Zorg voor goed contrast tussen tekst en achtergrond. Verander alleen wat nodig is voor de opdracht en behoud de rest. Bij kleuren: gebruik 6-cijferige hex-codes en laat kleuren goed samengaan. Maximaal 30 ops. Bij een vage of open opdracht (bijvoorbeeld verras me) kies je een verrassende maar nette oplossing en herhaal je niet dezelfde keuzes als eerder. Zaadje: ${seedStr()}.`;
   try{
     const d=await s.json(prompt,{signal:ctl.signal});
     const ops=Array.isArray(d&&d.ops)?d.ops:[];
@@ -2949,7 +3127,7 @@ Regels: x en y zijn het midden van een laag. Houd alles binnen het canvas en tek
     if(e&&e.code==='cancelled') asst.msgs.push({r:'a',t:'Gestopt.'});
     else asst.msgs.push({r:'a',t:aiMsg(e),err:true});
   }
-  asst.busy=false;asst.ctl=null;renderAsst();
+  asst.busy=false;asst.ctl=null;_ac=null;renderAsst();
 }
 $('#adock').addEventListener('input',e=>{if(e.target.id==='asin') asst.input=e.target.value;});
 $('#adock').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='asin'){e.preventDefault();runAssistant(asst.input);}});
@@ -2958,7 +3136,7 @@ $('#adock').addEventListener('click',e=>{
   const a=b.dataset.as;
   if(a==='close') closeAsst();
   else if(a==='send') runAssistant(($('#asin')?$('#asin').value:asst.input));
-  else if(a==='chip') runAssistant(ASST_CHIPS[+b.dataset.i]);
+  else if(a==='chip') runAssistant(asstChips()[+b.dataset.i].q());
   else if(a==='stop'){if(asst.ctl){try{asst.ctl.abort();}catch(x){}}}
   else if(a==='undo'){undo();const l=asst.msgs[asst.msgs.length-1];if(l) l.n=0;asst.msgs.push({r:'a',t:'Teruggezet.'});renderAsst();}
 });
@@ -3417,7 +3595,7 @@ const tiStyle=t=>`aspect-ratio:${t.W}/${t.H};${t.W>=t.H?'width:calc(100% - var(-
 function tgridHTML(idx){
   if(homeCat==='mine'){
     if(!myTpls.length) return `<p class="hint" style="grid-column:1/-1">Nog geen eigen sjablonen. Open een ontwerp en kies in het menu “Bewaar als sjabloon”.</p>`;
-    return myTpls.map(t=>`<div class="tw"><button type="button" class="tcard" data-h="mytpl" data-id="${t.id}"><div class="tth"><img class="on" alt="" src="${t.thumb}" style="${tiStyle(t)}"></div><b>${esc(t.name)}</b><small>${t.W}×${t.H}</small></button><button type="button" class="heartb" data-h="mytpldel" data-id="${t.id}" aria-label="Sjabloon verwijderen">${ico('trash',16)}</button></div>`).join('');
+    return myTpls.map(t=>`<div class="tw"><button type="button" class="tcard" data-h="mytpl" data-id="${t.id}"><div class="tth"><img class="on" alt="" src="${t.thumb}" style="${tiStyle(t)}"></div><b>${esc(t.name)}</b><small>${t.W}×${t.H}</small></button><div class="tacts"><button type="button" data-h="mytplren" data-id="${t.id}">${ico('type',15)} Hernoem</button><button type="button" class="dng" data-h="mytpldel" data-id="${t.id}">${ico('trash',15)} Verwijder</button></div></div>`).join('');
   }
   if(!idx.length) return `<p class="hint" style="grid-column:1/-1">${homeCat==='fav'&&!homeQ?'Nog geen favorieten. Tik op het hartje bij een sjabloon.':'Geen sjablonen gevonden. Probeer een ander woord.'}</p>`;
   return idx.map(i=>{
@@ -3675,7 +3853,7 @@ fontsWait().then(()=>{
   hydrateThumbs();
 });
 window.addEventListener('pagehide',doAutosave);
-window.__logo={toScr,getView:()=>view,ICONLIB,ELEMENTS,insertTemplate,selList,selIds,setSelection,clearSel,groupMembers,selBounds,toGroupSel,dupSel,delSel,alignSel,distSel,flipSel,applyOps,layerJSON,getMulti:()=>({multi,sel,multiMode,inGroup}),setMultiMode,shapePath,drawIcon,TPL,PALS,STYLES,genLogo,SIZES,openDoc,mockCanvas,boardCanvas,normFree,normConcept,localConcepts,describeDesign,drawBackground,renderExport,getS:()=>S,MOCKS,cleanObj,applyTheme,randomTheme,alignTo,paletteFromColors,colorsFromPixels,checkDesign,designBounds,resizeDoc,replaceColor,openPalEditor,openPalMgr,showCheck,tgridHTML,homeIdx,copyStyle,pasteStyle,allPals,getMy:()=>({myPals,myCols}),palEditorAction,palMgrAction,favAdd,makePDF,importImage,qrMatrix,addElement,addQR,fitTextWidth,showHistory,saveAsTemplate,toggleFav,imgSource,refreshGrid,hydrateThumbs,ELEMENTS,openDrawer,openAI,openMock,openWizard,showAbout,showPreview,openBoard,renderHome,showTour,openExport,setTab:(t,id)=>{tab=t;if(id!==undefined)sel=id;buildPanel();},surprise,showSizes,aiWrite,runAI};
+window.__logo={colorTry,nudgeSel,searchHTML,addBody,insertMine,renameTpl,promptConcepts,promptFree,localConcepts,asstChips,writeSet,newBrief,ART_DIRS,toScr,getView:()=>view,ICONLIB,ELEMENTS,insertTemplate,selList,selIds,setSelection,clearSel,groupMembers,selBounds,toGroupSel,dupSel,delSel,alignSel,distSel,flipSel,applyOps,layerJSON,getMulti:()=>({multi,sel,multiMode,inGroup}),setMultiMode,shapePath,drawIcon,TPL,PALS,STYLES,genLogo,SIZES,openDoc,mockCanvas,boardCanvas,normFree,normConcept,localConcepts,describeDesign,drawBackground,renderExport,getS:()=>S,MOCKS,cleanObj,applyTheme,randomTheme,alignTo,paletteFromColors,colorsFromPixels,checkDesign,designBounds,resizeDoc,replaceColor,openPalEditor,openPalMgr,showCheck,tgridHTML,homeIdx,copyStyle,pasteStyle,allPals,getMy:()=>({myPals,myCols}),palEditorAction,palMgrAction,favAdd,makePDF,importImage,qrMatrix,addElement,addQR,fitTextWidth,showHistory,saveAsTemplate,toggleFav,imgSource,refreshGrid,hydrateThumbs,ELEMENTS,openDrawer,openAI,openMock,openWizard,showAbout,showPreview,openBoard,renderHome,showTour,openExport,setTab:(t,id)=>{tab=t;if(id!==undefined)sel=id;buildPanel();},surprise,showSizes,aiWrite,runAI};
 })();
 try{if('serviceWorker' in navigator&&/^https?:/.test(location.protocol)) window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}catch(_){}
 </script>
