@@ -2560,6 +2560,7 @@ function renderHome(){
    <div class="tgrid" id="tgrid">${tgridHTML(idx)}</div>
    ${list.length?`<div class="sec" style="margin-top:24px">Mijn projecten</div>${list.map(p=>`<div class="prow"><img src="${p.thumb}" alt=""><div class="pn"><b>${esc(p.name)}</b><small>${new Date(p.t).toLocaleDateString('nl-NL')}</small></div><button type="button" class="btn sm" data-h="proj" data-id="${p.id}">Open</button></div>`).join('')}`:''}
    <p class="hint" style="margin-top:24px">Alles wat je maakt blijft op dit apparaat. Je kunt elk sjabloon na het openen helemaal aanpassen.</p>
+   <p class="hint" style="margin-top:4px;text-align:center;opacity:.7">Logo Studio versie 7.1 • nieuw: zoeken, pipet, AI-variatie</p>
   </div>`;
   hydrateThumbs();
 }
@@ -3855,7 +3856,7 @@ fontsWait().then(()=>{
 window.addEventListener('pagehide',doAutosave);
 window.__logo={colorTry,nudgeSel,searchHTML,addBody,insertMine,renameTpl,promptConcepts,promptFree,localConcepts,asstChips,writeSet,newBrief,ART_DIRS,toScr,getView:()=>view,ICONLIB,ELEMENTS,insertTemplate,selList,selIds,setSelection,clearSel,groupMembers,selBounds,toGroupSel,dupSel,delSel,alignSel,distSel,flipSel,applyOps,layerJSON,getMulti:()=>({multi,sel,multiMode,inGroup}),setMultiMode,shapePath,drawIcon,TPL,PALS,STYLES,genLogo,SIZES,openDoc,mockCanvas,boardCanvas,normFree,normConcept,localConcepts,describeDesign,drawBackground,renderExport,getS:()=>S,MOCKS,cleanObj,applyTheme,randomTheme,alignTo,paletteFromColors,colorsFromPixels,checkDesign,designBounds,resizeDoc,replaceColor,openPalEditor,openPalMgr,showCheck,tgridHTML,homeIdx,copyStyle,pasteStyle,allPals,getMy:()=>({myPals,myCols}),palEditorAction,palMgrAction,favAdd,makePDF,importImage,qrMatrix,addElement,addQR,fitTextWidth,showHistory,saveAsTemplate,toggleFav,imgSource,refreshGrid,hydrateThumbs,ELEMENTS,openDrawer,openAI,openMock,openWizard,showAbout,showPreview,openBoard,renderHome,showTour,openExport,setTab:(t,id)=>{tab=t;if(id!==undefined)sel=id;buildPanel();},surprise,showSizes,aiWrite,runAI};
 })();
-try{if('serviceWorker' in navigator&&/^https?:/.test(location.protocol)) window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}catch(_){}
+try{if('serviceWorker' in navigator&&/^https?:/.test(location.protocol)) (function(){var had=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventListener('controllerchange',function(){if(had&&!window.__rl){window.__rl=1;location.reload();}});window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').then(function(r){r.update();}).catch(function(){});});})();}catch(_){}
 </script>
 </body>
 </html>
